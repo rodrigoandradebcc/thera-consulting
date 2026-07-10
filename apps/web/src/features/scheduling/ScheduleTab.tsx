@@ -54,7 +54,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
   const pending = create.isPending || reschedule.isPending;
 
   return (
-    <div className="max-w-xl space-y-6 rounded-lg border border-border bg-card p-6">
+    <div className="max-w-xl space-y-6 rounded-xl border border-border bg-card p-6 shadow-panel">
       {existing !== null && (
         <div className="flex items-center gap-3">
           <ScheduleStatusBadge status={existing.status} />

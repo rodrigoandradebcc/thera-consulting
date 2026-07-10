@@ -23,6 +23,12 @@ export class TransportTypesController {
     return transportTypes.map(TransportTypeResponse.from);
   }
 
+  @Get(':id')
+  @ApiOperation({ summary: 'Consulta um tipo de transporte' })
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<TransportTypeResponse> {
+    return TransportTypeResponse.from(await this.service.findByIdOrThrow(id));
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Atualiza um tipo de transporte. O code é imutável.' })
   async update(

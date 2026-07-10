@@ -102,7 +102,12 @@ export function ItemsPage() {
 
   return (
     <>
-      <PageHeader title="Itens" description="Catálogo. Itens são imutáveis após a criação." actions={<CreateItemDialog />} />
+      <PageHeader
+        eyebrow="Catálogo"
+        title="Itens"
+        description="Catálogo. Itens são imutáveis após a criação."
+        actions={<CreateItemDialog />}
+      />
 
       {query.isPending && <TableSkeleton />}
       {query.isError && <ErrorState error={query.error} onRetry={() => void query.refetch()} />}
@@ -110,7 +115,7 @@ export function ItemsPage() {
         <EmptyState title="Nenhum item" description="Cadastre o primeiro item do catálogo." />
       )}
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-card">
+        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
           <Table>
             <TableHeader>
               <TableRow>

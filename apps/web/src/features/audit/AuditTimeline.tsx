@@ -56,7 +56,7 @@ export function AuditTimeline({ salesOrderId }: { salesOrderId: string }) {
   return (
     <ol className="space-y-3">
       {query.data.map((log) => (
-        <li key={log.id} className="rounded-lg border border-border bg-card p-4">
+        <li key={log.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-medium">{ACTION_TEXT[log.action]}</p>
             <time dateTime={log.createdAt} className="tabular text-xs text-muted-foreground">

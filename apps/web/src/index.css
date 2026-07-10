@@ -24,6 +24,7 @@
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #1e40af;
+  --shadow-panel: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -16px rgb(15 23 42 / 0.16);
 }
 
 .dark {
@@ -46,6 +47,7 @@
   --border: #1e293b;
   --input: #1e293b;
   --ring: #3b82f6;
+  --shadow-panel: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.6);
 }
 
 @theme inline {
@@ -80,11 +82,40 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    /* Atmosfera: uma névoa azul discreta no canto superior, para o fundo não
+       ser um chapado morto. color-mix com --primary adapta aos dois temas. */
+    background-image:
+      radial-gradient(
+        1100px 520px at 100% -8%,
+        color-mix(in oklab, var(--primary) 9%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        900px 500px at -5% 110%,
+        color-mix(in oklab, var(--primary) 6%, transparent),
+        transparent 55%
+      );
+    background-attachment: fixed;
   }
   /* Dígitos de largura fixa: sem isso a coluna de dinheiro dança a cada re-render. */
   .tabular {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+  /* Rótulos técnicos (eyebrow, cabeçalhos de seção do chrome). */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+  }
+  /* Elevação de painel — chrome (sidebar, header) e superfícies que devem
+     descolar do fundo. Sombra calibrada por tema. */
+  .shadow-panel {
+    box-shadow: var(--shadow-panel);
   }
 }
 
