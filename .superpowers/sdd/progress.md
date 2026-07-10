@@ -15,7 +15,7 @@ Merge base: `b4b8fc7`
 - [x] Task 1: complete (commits 5304797..34578ce, review clean). Fix aplicado: ConfigService no lugar de process.env, após achado Important do revisor. API: 47 unit + 37 e2e.
 - [x] Task 2: complete (commit 2df32b2, review clean). 5 desvios adjudicados como justificados: vitest/config, baseUrl removido (TS 6.0.3 deprecia), paths no tsconfig raiz (shadcn CLI), strict explícito, scripts de teste.
 - [x] Task 3: complete (commits bf0eda6..e1897d6, review clean). 20 testes. Fix: cobertura do interceptor X-Actor + TZ fixado em America/Sao_Paulo (provado: sem `timeZone: 'UTC'`, dateBR volta 31/07). Desvio: `erasableSyntaxOnly` proíbe parameter properties; ApiError reescrito com campos explícitos.
-- [ ] Task 4: Camada de API + query keys
+- [x] Task 4: complete (commit eac99f2, review clean). 7 arquivos, tsc limpo, 20 testes intactos. Sem type assertions.
 - [ ] Task 5: Layout, rotas, componentes de estado
 - [ ] Task 6: Lista de OVs com filtros na URL
 - [ ] Task 7: Criar OV
