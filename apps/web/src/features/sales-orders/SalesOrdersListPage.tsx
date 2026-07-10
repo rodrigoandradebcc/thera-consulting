@@ -51,40 +51,72 @@ export function SalesOrdersListPage() {
       )}
 
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-white">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Número</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Total</TableHead>
-                <TableHead>Entrega</TableHead>
-                <TableHead>Itens</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {query.data.map((order) => (
-                <TableRow
-                  key={order.id}
-                  tabIndex={0}
-                  className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring"
-                  onClick={() => void navigate(`/sales-orders/${order.id}`)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') void navigate(`/sales-orders/${order.id}`);
-                  }}
+        <>
+          {/* Tabela em telas médias e maiores */}
+          <div className="hidden md:block">
+            <div className="overflow-hidden rounded-lg border border-border bg-white">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Número</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Total</TableHead>
+                    <TableHead>Entrega</TableHead>
+                    <TableHead>Itens</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {query.data.map((order) => (
+                    <TableRow
+                      key={order.id}
+                      tabIndex={0}
+                      className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring"
+                      onClick={() => void navigate(`/sales-orders/${order.id}`)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') void navigate(`/sales-orders/${order.id}`);
+                      }}
+                    >
+                      <TableCell className="tabular">{order.number}</TableCell>
+                      <TableCell><StatusBadge status={order.status} /></TableCell>
+                      <TableCell className="tabular text-right">{money(order.total)}</TableCell>
+                      <TableCell className="tabular">
+                        {order.schedule === null ? '—' : dateBR(order.schedule.scheduledDate)}
+                      </TableCell>
+                      <TableCell>{order.items.length}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          {/* Cards em telas pequenas */}
+          <ul className="grid gap-3 md:hidden">
+            {query.data.map((order) => (
+              <li key={order.id} className="rounded-lg border border-border bg-white p-4">
+                <Link
+                  to={`/sales-orders/${order.id}`}
+                  className="block focus-visible:outline-2 focus-visible:outline-ring"
                 >
-                  <TableCell className="tabular">{order.number}</TableCell>
-                  <TableCell><StatusBadge status={order.status} /></TableCell>
-                  <TableCell className="tabular text-right">{money(order.total)}</TableCell>
-                  <TableCell className="tabular">
-                    {order.schedule === null ? '—' : dateBR(order.schedule.scheduledDate)}
-                  </TableCell>
-                  <TableCell>{order.items.length}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+                  <div className="flex items-baseline justify-between">
+                    <span className="tabular font-medium">{order.number}</span>
+                    <StatusBadge status={order.status} />
+                  </div>
+                  <dl className="mt-2 grid grid-cols-2 gap-1 text-sm">
+                    <dt className="text-slate-600">Total</dt>
+                    <dd className="tabular text-right">{money(order.total)}</dd>
+                    <dt className="text-slate-600">Entrega</dt>
+                    <dd className="tabular text-right">
+                      {order.schedule === null ? '—' : dateBR(order.schedule.scheduledDate)}
+                    </dd>
+                    <dt className="text-slate-600">Itens</dt>
+                    <dd className="tabular text-right">{order.items.length}</dd>
+                  </dl>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </>
   );

@@ -78,8 +78,11 @@ describe('DashboardPage', () => {
     );
     renderPage();
 
-    expect(await screen.findByText(salesOrderFixture.number)).toBeInTheDocument();
-    expect(screen.getByText('09/07/2026')).toBeInTheDocument();
+    // A tabela (desktop) e os cards (mobile) renderizam a mesma entrega em
+    // paralelo — a visibilidade é só CSS (`hidden md:block` / `md:hidden`),
+    // então os dois nós coexistem no DOM em jsdom.
+    expect(await screen.findAllByText(salesOrderFixture.number)).toHaveLength(2);
+    expect(screen.getAllByText('09/07/2026')).toHaveLength(2);
   });
 
   it('renderiza cards de status com zero ordens', async () => {

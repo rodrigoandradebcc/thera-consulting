@@ -72,32 +72,60 @@ export function DashboardPage() {
           description={`Nada previsto para os próximos ${DAYS_AHEAD} dias.`}
         />
       ) : (
-        <div className="overflow-hidden rounded-lg border border-border bg-white">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>OV</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead>Janela</TableHead>
-                <TableHead>Agendamento</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {upcoming.map(({ order, schedule }) => (
-                <TableRow key={order.id}>
-                  <TableCell className="tabular">
-                    <Link to={`/sales-orders/${order.id}`} className="underline underline-offset-2">
-                      {order.number}
-                    </Link>
-                  </TableCell>
-                  <TableCell className="tabular">{dateBR(schedule.scheduledDate)}</TableCell>
-                  <TableCell>{WINDOW_LABEL[schedule.window]}</TableCell>
-                  <TableCell><ScheduleStatusBadge status={schedule.status} /></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <>
+          {/* Tabela em telas médias e maiores */}
+          <div className="hidden md:block">
+            <div className="overflow-hidden rounded-lg border border-border bg-white">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>OV</TableHead>
+                    <TableHead>Data</TableHead>
+                    <TableHead>Janela</TableHead>
+                    <TableHead>Agendamento</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {upcoming.map(({ order, schedule }) => (
+                    <TableRow key={order.id}>
+                      <TableCell className="tabular">
+                        <Link to={`/sales-orders/${order.id}`} className="underline underline-offset-2">
+                          {order.number}
+                        </Link>
+                      </TableCell>
+                      <TableCell className="tabular">{dateBR(schedule.scheduledDate)}</TableCell>
+                      <TableCell>{WINDOW_LABEL[schedule.window]}</TableCell>
+                      <TableCell><ScheduleStatusBadge status={schedule.status} /></TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          {/* Cards em telas pequenas */}
+          <ul className="grid gap-3 md:hidden">
+            {upcoming.map(({ order, schedule }) => (
+              <li key={order.id} className="rounded-lg border border-border bg-white p-4">
+                <div className="flex items-baseline justify-between">
+                  <Link
+                    to={`/sales-orders/${order.id}`}
+                    className="tabular font-medium underline underline-offset-2"
+                  >
+                    {order.number}
+                  </Link>
+                  <ScheduleStatusBadge status={schedule.status} />
+                </div>
+                <dl className="mt-2 grid grid-cols-2 gap-1 text-sm">
+                  <dt className="text-slate-600">Data</dt>
+                  <dd className="tabular text-right">{dateBR(schedule.scheduledDate)}</dd>
+                  <dt className="text-slate-600">Janela</dt>
+                  <dd className="text-right">{WINDOW_LABEL[schedule.window]}</dd>
+                </dl>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </>
   );
