@@ -19,7 +19,7 @@ Merge base: `b4b8fc7`
 - [x] Task 5: complete (commit d5afc1c, review clean). 22 testes. RouterProvider verificado em Chrome real. Desvios justificados: oxlint (não eslint) é o linter do pacote; App.css nunca existiu.
 - [x] Task 6: complete (commits 4e526a0..c33e494, review clean). 29 testes. Dois fixes: (a) hooks de mutação de sales-orders tinham sido descartados por erro de instrução minha; (b) testes de filtro não observavam a URL — agora leem `router.state.location.search`, provado com experimento de no-op.
 - [x] Task 7: complete (commits d54d89d..0496760, review clean). 41 testes. Fix de 4 achados: erros por linha de item agora renderizam; transportTypeId reseta ao trocar cliente; gate de loading revertido (a corrida era do teste); estimateTotalCents trunca >2 decimais.
-- [ ] Task 8: Detalhe + stepper + transição de status
+- [x] Task 8: complete (commit aec1b1c, review clean, zero achados). 49 testes. `as NonNullable` do plano substituído por re-narrowing real (`const nextStatus = next` antes da closure).
 - [ ] Task 9: Agendamento
 - [ ] Task 10: Auditoria
 - [ ] Task 11: Cadastros
