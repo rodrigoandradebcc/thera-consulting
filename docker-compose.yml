@@ -17,8 +17,6 @@ services:
       timeout: 5s
       retries: 10
 
-  # Profile "full": sobe a API junto do banco (`docker compose --profile full up --build`).
-  # Sem o profile, `docker compose up` sobe só o Postgres — fluxo de dev com api:dev.
   api:
     profiles: ['full']
     build:
