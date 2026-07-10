@@ -17,8 +17,10 @@
   --secondary-foreground: #ffffff;
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
-  --accent: #d97706;
-  --accent-foreground: #ffffff;
+  /* accent = superfície neutra do shadcn (hover de select, skeleton). NÃO é a
+     cor de marca âmbar — essa vive nas classes amber-* dos badges de status. */
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
   --border: #e2e8f0;
@@ -40,8 +42,8 @@
   --secondary-foreground: #0b1220;
   --muted: #1e293b;
   --muted-foreground: #94a3b8;
-  --accent: #f59e0b;
-  --accent-foreground: #0b1220;
+  --accent: #1e293b;
+  --accent-foreground: #e2e8f0;
   --destructive: #f87171;
   --destructive-foreground: #0b1220;
   --border: #1e293b;
