@@ -31,8 +31,13 @@ export function estimateTotalCents(
   lines: ReadonlyArray<{ quantity: number; unitPrice: string }>,
 ): number {
   return lines.reduce((total, line) => {
-    const [reais, centavos = '0'] = line.unitPrice.split('.');
-    const priceCents = Number(reais) * 100 + Number(centavos.padEnd(2, '0'));
+    const [reais, centavosRaw = '0'] = line.unitPrice.split('.');
+    // A API só emite duas casas decimais, mas normalizamos defensivamente: usamos
+    // apenas os dois primeiros dígitos fracionários (truncando quaisquer dígitos
+    // extras) em vez de tratá-los como centavos adicionais. Um valor mal formado
+    // como "129.999" vira 129,99 em vez de somar 999 centavos silenciosamente.
+    const centavos = centavosRaw.slice(0, 2).padEnd(2, '0');
+    const priceCents = Number(reais) * 100 + Number(centavos);
     return total + priceCents * line.quantity;
   }, 0);
 }

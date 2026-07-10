@@ -62,4 +62,11 @@ describe('estimateTotalCents', () => {
   it('lida com valor sem ponto decimal', () => {
     expect(estimateTotalCents([{ quantity: 1, unitPrice: '130' }])).toBe(13_000);
   });
+
+  it('trunca casas decimais além da segunda em vez de corromper o total', () => {
+    // A API só emite duas casas decimais, mas se um valor malformado com mais
+    // casas aparecesse, truncamos os dígitos extras em vez de somá-los como
+    // centavos adicionais (comportamento documentado escolhido em estimateTotalCents).
+    expect(estimateTotalCents([{ quantity: 1, unitPrice: '129.999' }])).toBe(12_999);
+  });
 });

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Trash2 } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -39,6 +40,19 @@ export function CreateSalesOrderPage() {
   const customerId = form.watch('customerId');
   const authorized = useCustomerTransportTypesQuery(customerId === '' ? undefined : customerId);
 
+  // Quando o cliente muda, o transporte selecionado pode não ser mais autorizado
+  // (a opção some do <select> sem disparar onChange, deixando o form com um valor
+  // obsoleto). Ignora a primeira renderização para não disparar um reset supérfluo
+  // quando o campo já está vazio.
+  const isFirstCustomerRender = useRef(true);
+  useEffect(() => {
+    if (isFirstCustomerRender.current) {
+      isFirstCustomerRender.current = false;
+      return;
+    }
+    form.resetField('transportTypeId');
+  }, [customerId, form]);
+
   const allowedTransports = (transportTypes.data ?? []).filter(
     (t) => t.active && (authorized.data ?? []).includes(t.id),
   );
@@ -73,16 +87,12 @@ export function CreateSalesOrderPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <div>
             <Label htmlFor="customerId">Cliente</Label>
-            {customers.isPending ? (
-              <p className="text-sm text-slate-500">Carregando clientes…</p>
-            ) : (
-              <select id="customerId" className={selectClass} {...form.register('customerId')}>
-                <option value="">Selecione…</option>
-                {(customers.data ?? []).filter((c) => c.active).map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </select>
-            )}
+            <select id="customerId" className={selectClass} {...form.register('customerId')}>
+              <option value="">Selecione…</option>
+              {(customers.data ?? []).filter((c) => c.active).map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
             {form.formState.errors.customerId && (
               <p role="alert" className="mt-1 text-sm text-destructive">
                 {form.formState.errors.customerId.message}
@@ -135,6 +145,11 @@ export function CreateSalesOrderPage() {
                     <option key={i.id} value={i.id}>{`${i.sku} — ${i.name}`}</option>
                   ))}
                 </select>
+                {form.formState.errors.items?.[index]?.itemId?.message && (
+                  <p role="alert" className="mt-1 text-sm text-destructive">
+                    {form.formState.errors.items[index]?.itemId?.message}
+                  </p>
+                )}
               </div>
               <div className="w-32">
                 <Label htmlFor={`qty-${index}`}>{`Quantidade ${index + 1}`}</Label>
@@ -144,6 +159,11 @@ export function CreateSalesOrderPage() {
                   min={1}
                   {...form.register(`items.${index}.quantity`)}
                 />
+                {form.formState.errors.items?.[index]?.quantity?.message && (
+                  <p role="alert" className="mt-1 text-sm text-destructive">
+                    {form.formState.errors.items[index]?.quantity?.message}
+                  </p>
+                )}
               </div>
               <Button
                 type="button"
