@@ -122,9 +122,9 @@ function EditCustomerDialog({
       toast.success('Cliente atualizado.');
       setOpen(false);
     } catch (error) {
-      const apiError = toApiError(error);
-      if (apiError.statusCode === 409) form.setError('email', { message: apiError.message });
-      else toast.error(apiError.message);
+      // Editar cliente altera nome/email — nenhum campo único. O document (único)
+      // é imutável e fora do form, então não há 409 possível aqui: só toast.
+      toast.error(toApiError(error).message);
     }
   }
 

@@ -64,7 +64,8 @@ export function AppLayout() {
                   // Barra de acento à esquerda no item ativo (só no layout vertical).
                   'md:before:absolute md:before:left-0 md:before:top-1/2 md:before:hidden md:before:h-5 md:before:w-0.5 md:before:-translate-y-1/2 md:before:rounded-full md:before:bg-primary',
                   isActive
-                    ? 'bg-primary/10 text-primary md:before:block'
+                    ? // dark:text-blue-300 mantém o texto ativo em AA (4.5:1+) sobre o tint no tema escuro.
+                      'bg-primary/10 text-primary md:before:block dark:bg-primary/15 dark:text-blue-300'
                     : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                 )
               }

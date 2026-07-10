@@ -39,7 +39,7 @@ pnpm dev          # API em :3000, front em :5173
 
 ```bash
 pnpm test                       # API: 47 unitários
-pnpm test:e2e                   # API: 37 de integração (exige o Postgres no ar)
+pnpm test:e2e                   # API: 38 de integração (exige o Postgres no ar)
 pnpm --filter @ovgs/web test    # web: 82 (Vitest + Testing Library)
 ```
 
@@ -310,7 +310,7 @@ Não há autenticação no escopo do desafio. O `actor` é lido do header opcion
 
 ## Testes
 
-O enunciado exige no mínimo 2 unitários e 1 de integração. A suíte tem **47 unitários e 37 de integração**, porque a regra central do desafio é uma máquina de estados — e máquina de estados se testa por exaustão.
+O enunciado exige no mínimo 2 unitários e 1 de integração. A suíte tem **47 unitários e 38 de integração**, porque a regra central do desafio é uma máquina de estados — e máquina de estados se testa por exaustão.
 
 **Unitários** (sem banco): matriz completa 5×5 da máquina de estados (as 25 combinações: 4 válidas, 21 rejeitadas), pré-condição de `AGENDADA`, regras de agendamento, cálculo de total com `Decimal`, e o filtro global de exceções.
 
