@@ -22,11 +22,14 @@ export function countConfirmedBySlot(orders: readonly SalesOrder[]): Map<string,
   return counts;
 }
 
+/** Único lugar onde o limite `>= MAX_DELIVERIES_PER_SLOT` é decidido. */
+export const isCountFull = (count: number): boolean => count >= MAX_DELIVERIES_PER_SLOT;
+
 export function isSlotFull(
   orders: readonly SalesOrder[],
   scheduledDate: string,
   window: DeliveryWindow,
 ): boolean {
   const count = countConfirmedBySlot(orders).get(slotKey(scheduledDate, window)) ?? 0;
-  return count >= MAX_DELIVERIES_PER_SLOT;
+  return isCountFull(count);
 }

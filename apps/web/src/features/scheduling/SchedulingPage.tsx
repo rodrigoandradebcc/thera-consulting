@@ -6,7 +6,7 @@ import { ScheduleStatusBadge } from '@/components/StatusBadge';
 import { TableSkeleton } from '@/components/TableSkeleton';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { countConfirmedBySlot, MAX_DELIVERIES_PER_SLOT, slotKey } from '@/domain/schedule';
+import { countConfirmedBySlot, isCountFull, MAX_DELIVERIES_PER_SLOT, slotKey } from '@/domain/schedule';
 import { useSalesOrdersQuery } from '@/features/sales-orders/queries';
 import type { SalesOrder, SalesOrderSchedule } from '@/lib/api/sales-orders';
 import { toApiError } from '@/lib/errors';
@@ -97,7 +97,7 @@ export function SchedulingPage() {
             {scheduled.map(({ order, schedule }) => {
               const key = slotKey(schedule.scheduledDate, schedule.window);
               const used = counts.get(key) ?? 0;
-              const full = used >= MAX_DELIVERIES_PER_SLOT;
+              const full = isCountFull(used);
 
               return (
                 <TableRow key={order.id}>
