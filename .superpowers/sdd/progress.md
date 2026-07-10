@@ -17,7 +17,7 @@ Merge base: `b4b8fc7`
 - [x] Task 3: complete (commits bf0eda6..e1897d6, review clean). 20 testes. Fix: cobertura do interceptor X-Actor + TZ fixado em America/Sao_Paulo (provado: sem `timeZone: 'UTC'`, dateBR volta 31/07). Desvio: `erasableSyntaxOnly` proíbe parameter properties; ApiError reescrito com campos explícitos.
 - [x] Task 4: complete (commit eac99f2, review clean). 7 arquivos, tsc limpo, 20 testes intactos. Sem type assertions.
 - [x] Task 5: complete (commit d5afc1c, review clean). 22 testes. RouterProvider verificado em Chrome real. Desvios justificados: oxlint (não eslint) é o linter do pacote; App.css nunca existiu.
-- [ ] Task 6: Lista de OVs com filtros na URL
+- [x] Task 6: complete (commits 4e526a0..c33e494, review clean). 29 testes. Dois fixes: (a) hooks de mutação de sales-orders tinham sido descartados por erro de instrução minha; (b) testes de filtro não observavam a URL — agora leem `router.state.location.search`, provado com experimento de no-op.
 - [ ] Task 7: Criar OV
 - [ ] Task 8: Detalhe + stepper + transição de status
 - [ ] Task 9: Agendamento
