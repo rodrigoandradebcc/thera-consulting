@@ -17,13 +17,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "pnpm db:migrate:test && jest --config ./test/jest-e2e.json",
     "postinstall": "prisma generate",
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
-    "db:reset": "prisma migrate reset --force"
+    "db:reset": "prisma migrate reset --force",
+    "db:migrate:test": "DATABASE_URL=\"postgresql://thera:thera@localhost:5432/thera?schema=test\" prisma migrate deploy"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
