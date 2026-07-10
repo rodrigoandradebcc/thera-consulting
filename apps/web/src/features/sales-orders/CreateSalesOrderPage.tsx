@@ -22,7 +22,7 @@ import {
 import { useCreateSalesOrder } from './queries';
 
 const selectClass =
-  'h-10 w-full rounded-md border border-border bg-white px-3 text-sm disabled:opacity-50';
+  'h-10 w-full rounded-md border border-border bg-card px-3 text-sm disabled:opacity-50';
 
 export function CreateSalesOrderPage() {
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ export function CreateSalesOrderPage() {
                 <option key={t.id} value={t.id}>{t.name}</option>
               ))}
             </select>
-            <p className="mt-1 text-xs text-slate-600">
+            <p className="mt-1 text-xs text-muted-foreground">
               {customerId === ''
                 ? 'Selecione um cliente para ver os transportes autorizados.'
                 : allowedTransports.length === 0
@@ -189,9 +189,9 @@ export function CreateSalesOrderPage() {
         </fieldset>
 
         <div className="rounded-lg border border-border bg-muted p-4">
-          <p className="text-sm text-slate-600">Total estimado</p>
+          <p className="text-sm text-muted-foreground">Total estimado</p>
           <p className="tabular text-2xl font-semibold">{money((totalCents / 100).toFixed(2))}</p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-muted-foreground">
             O valor final é calculado pelo servidor no momento da criação.
           </p>
         </div>

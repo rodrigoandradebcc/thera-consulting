@@ -11,7 +11,7 @@ import { dateBR } from '@/lib/format';
 import { useConfirmSchedule, useCreateSchedule, useReschedule } from './queries';
 import { scheduleSchema, WINDOW_LABEL, type ScheduleForm } from './scheduleSchema';
 
-const selectClass = 'h-10 w-full rounded-md border border-border bg-white px-3 text-sm';
+const selectClass = 'h-10 w-full rounded-md border border-border bg-card px-3 text-sm';
 const windowOptions = scheduleSchema.shape.window.options;
 
 export function ScheduleTab({ order }: { order: SalesOrder }) {
@@ -54,14 +54,14 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
   const pending = create.isPending || reschedule.isPending;
 
   return (
-    <div className="max-w-xl space-y-6 rounded-lg border border-border bg-white p-6">
+    <div className="max-w-xl space-y-6 rounded-lg border border-border bg-card p-6">
       {existing !== null && (
         <div className="flex items-center gap-3">
           <ScheduleStatusBadge status={existing.status} />
           <span className="tabular text-sm">{dateBR(existing.scheduledDate)}</span>
-          <span className="text-sm text-slate-600">{WINDOW_LABEL[existing.window]}</span>
+          <span className="text-sm text-muted-foreground">{WINDOW_LABEL[existing.window]}</span>
           {existing.rescheduleCount > 0 && (
-            <span className="text-xs text-slate-500">{existing.rescheduleCount}× reagendado</span>
+            <span className="text-xs text-muted-foreground">{existing.rescheduleCount}× reagendado</span>
           )}
         </div>
       )}
@@ -102,7 +102,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
       </form>
 
       {existing !== null && existing.status === 'CONFIRMADO' && (
-        <p className="text-xs text-slate-600">
+        <p className="text-xs text-muted-foreground">
           Reagendar mantém o agendamento confirmado. A OV não retrocede de status.
         </p>
       )}

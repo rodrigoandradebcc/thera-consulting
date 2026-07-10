@@ -54,7 +54,7 @@ export function SalesOrdersListPage() {
         <>
           {/* Tabela em telas médias e maiores */}
           <div className="hidden md:block">
-            <div className="overflow-hidden rounded-lg border border-border bg-white">
+            <div className="overflow-hidden rounded-lg border border-border bg-card">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -93,7 +93,7 @@ export function SalesOrdersListPage() {
           {/* Cards em telas pequenas */}
           <ul className="grid gap-3 md:hidden">
             {query.data.map((order) => (
-              <li key={order.id} className="rounded-lg border border-border bg-white p-4">
+              <li key={order.id} className="rounded-lg border border-border bg-card p-4">
                 <Link
                   to={`/sales-orders/${order.id}`}
                   className="block focus-visible:outline-2 focus-visible:outline-ring"
@@ -103,13 +103,13 @@ export function SalesOrdersListPage() {
                     <StatusBadge status={order.status} />
                   </div>
                   <dl className="mt-2 grid grid-cols-2 gap-1 text-sm">
-                    <dt className="text-slate-600">Total</dt>
+                    <dt className="text-muted-foreground">Total</dt>
                     <dd className="tabular text-right">{money(order.total)}</dd>
-                    <dt className="text-slate-600">Entrega</dt>
+                    <dt className="text-muted-foreground">Entrega</dt>
                     <dd className="tabular text-right">
                       {order.schedule === null ? '—' : dateBR(order.schedule.scheduledDate)}
                     </dd>
-                    <dt className="text-slate-600">Itens</dt>
+                    <dt className="text-muted-foreground">Itens</dt>
                     <dd className="tabular text-right">{order.items.length}</dd>
                   </dl>
                 </Link>

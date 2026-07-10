@@ -79,7 +79,7 @@ function CreateItemDialog() {
           <div>
             <Label htmlFor="unitPrice">Preço unitário</Label>
             <Input id="unitPrice" inputMode="decimal" {...form.register('unitPrice')} />
-            <p className="mt-1 text-xs text-slate-600">
+            <p className="mt-1 text-xs text-muted-foreground">
               Duas casas decimais, ex.: 89.50. A API não aceita outros formatos.
             </p>
             {form.formState.errors.unitPrice && (
@@ -110,7 +110,7 @@ export function ItemsPage() {
         <EmptyState title="Nenhum item" description="Cadastre o primeiro item do catálogo." />
       )}
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-white">
+        <div className="overflow-hidden rounded-lg border border-border bg-card">
           <Table>
             <TableHeader>
               <TableRow>

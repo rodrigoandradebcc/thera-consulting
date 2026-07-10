@@ -12,7 +12,7 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry: () => 
       <AlertTriangle aria-hidden="true" className="size-8 text-destructive" />
       <div>
         <p className="font-medium">Não foi possível carregar</p>
-        <p className="text-sm text-slate-600">{apiError.message}</p>
+        <p className="text-sm text-muted-foreground">{apiError.message}</p>
       </div>
       <Button variant="outline" onClick={onRetry}>
         Tentar novamente

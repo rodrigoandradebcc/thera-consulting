@@ -55,7 +55,7 @@ function CreateDialog() {
           <div>
             <Label htmlFor="code">Código</Label>
             <Input id="code" {...form.register('code')} />
-            <p className="mt-1 text-xs text-slate-600">Imutável após a criação.</p>
+            <p className="mt-1 text-xs text-muted-foreground">Imutável após a criação.</p>
             {form.formState.errors.code && (
               <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.code.message}</p>
             )}
@@ -100,7 +100,7 @@ function ToggleActive({ id, active }: { id: string; active: boolean }) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader><DialogTitle>Desativar tipo de transporte?</DialogTitle></DialogHeader>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-muted-foreground">
           Baixa lógica: o registro é preservado, e as OVs existentes continuam válidas.
           Ele deixa de ser oferecido em novas OVs.
         </p>
@@ -132,7 +132,7 @@ export function TransportTypesPage() {
         <EmptyState title="Nenhum tipo de transporte" description="Cadastre o primeiro tipo de transporte." />
       )}
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-white">
+        <div className="overflow-hidden rounded-lg border border-border bg-card">
           <Table>
             <TableHeader>
               <TableRow>

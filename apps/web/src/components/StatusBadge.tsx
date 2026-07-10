@@ -13,16 +13,39 @@ import type { SalesOrderStatus } from '@/domain/status-machine';
 import { cn } from '@/lib/utils';
 
 const ORDER: Record<SalesOrderStatus, { icon: LucideIcon; className: string }> = {
-  CRIADA: { icon: FileText, className: 'bg-slate-100 text-slate-700 ring-slate-300' },
-  PLANEJADA: { icon: ClipboardCheck, className: 'bg-blue-100 text-blue-800 ring-blue-300' },
-  AGENDADA: { icon: CalendarCheck, className: 'bg-amber-100 text-amber-900 ring-amber-300' },
-  EM_TRANSPORTE: { icon: Truck, className: 'bg-cyan-100 text-cyan-900 ring-cyan-300' },
-  ENTREGUE: { icon: PackageCheck, className: 'bg-emerald-100 text-emerald-900 ring-emerald-300' },
+  CRIADA: {
+    icon: FileText,
+    className: 'bg-slate-100 text-slate-700 ring-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700',
+  },
+  PLANEJADA: {
+    icon: ClipboardCheck,
+    className: 'bg-blue-100 text-blue-800 ring-blue-300 dark:bg-blue-950 dark:text-blue-200 dark:ring-blue-800',
+  },
+  AGENDADA: {
+    icon: CalendarCheck,
+    className: 'bg-amber-100 text-amber-900 ring-amber-300 dark:bg-amber-950 dark:text-amber-200 dark:ring-amber-800',
+  },
+  EM_TRANSPORTE: {
+    icon: Truck,
+    className: 'bg-cyan-100 text-cyan-900 ring-cyan-300 dark:bg-cyan-950 dark:text-cyan-200 dark:ring-cyan-800',
+  },
+  ENTREGUE: {
+    icon: PackageCheck,
+    className:
+      'bg-emerald-100 text-emerald-900 ring-emerald-300 dark:bg-emerald-950 dark:text-emerald-200 dark:ring-emerald-800',
+  },
 };
 
 const SCHEDULE: Record<ScheduleStatus, { icon: LucideIcon; className: string }> = {
-  PENDENTE: { icon: Clock, className: 'bg-slate-100 text-slate-700 ring-slate-300' },
-  CONFIRMADO: { icon: CheckCircle2, className: 'bg-emerald-100 text-emerald-900 ring-emerald-300' },
+  PENDENTE: {
+    icon: Clock,
+    className: 'bg-slate-100 text-slate-700 ring-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700',
+  },
+  CONFIRMADO: {
+    icon: CheckCircle2,
+    className:
+      'bg-emerald-100 text-emerald-900 ring-emerald-300 dark:bg-emerald-950 dark:text-emerald-200 dark:ring-emerald-800',
+  },
 };
 
 const base =

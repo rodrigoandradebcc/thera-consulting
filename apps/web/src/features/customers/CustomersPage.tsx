@@ -113,7 +113,7 @@ function DeactivateCustomer({ id, active }: { id: string; active: boolean }) {
       <DialogTrigger asChild><Button size="sm" variant="outline">Desativar</Button></DialogTrigger>
       <DialogContent>
         <DialogHeader><DialogTitle>Desativar cliente?</DialogTitle></DialogHeader>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-muted-foreground">
           Baixa lógica: o registro é preservado e as OVs existentes continuam válidas.
           Ele deixa de ser oferecido em novas OVs.
         </p>
@@ -147,7 +147,7 @@ export function CustomersPage() {
       )}
 
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-white">
+        <div className="overflow-hidden rounded-lg border border-border bg-card">
           <Table>
             <TableHeader>
               <TableRow>

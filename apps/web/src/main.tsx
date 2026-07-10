@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router/dom';
 import { Toaster } from '@/components/ui/sonner';
+import { applyTheme, resolveInitialTheme } from '@/lib/theme';
 import { router } from '@/routes';
 import './index.css';
 
@@ -12,6 +13,9 @@ const queryClient = new QueryClient({
     queries: { retry: 1, staleTime: 30_000, refetchOnWindowFocus: false },
   },
 });
+
+// Aplicar antes do primeiro paint evita o flash de tema errado.
+applyTheme(resolveInitialTheme());
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

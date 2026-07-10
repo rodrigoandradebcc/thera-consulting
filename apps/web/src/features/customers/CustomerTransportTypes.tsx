@@ -35,7 +35,7 @@ export function CustomerTransportTypes({ customerId }: { customerId: string }) {
     return (
       <div className="space-y-3 rounded-lg border border-border bg-muted p-4">
         <p className="text-sm font-medium">Transportes autorizados</p>
-        <p className="text-sm text-slate-600">Carregando transportes…</p>
+        <p className="text-sm text-muted-foreground">Carregando transportes…</p>
       </div>
     );
   }
@@ -63,7 +63,7 @@ export function CustomerTransportTypes({ customerId }: { customerId: string }) {
       <p className="text-sm font-medium">Transportes autorizados</p>
 
       {current.length === 0 ? (
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-muted-foreground">
           Nenhum. Sem ao menos um, este cliente não pode ter ordens de venda.
         </p>
       ) : (
@@ -71,7 +71,7 @@ export function CustomerTransportTypes({ customerId }: { customerId: string }) {
           {current.map((id) => {
             const t = transportTypes.data.find((x) => x.id === id);
             return (
-              <li key={id} className="rounded-full bg-white px-2.5 py-1 text-xs ring-1 ring-border">
+              <li key={id} className="rounded-full bg-card px-2.5 py-1 text-xs ring-1 ring-border">
                 {t?.name ?? id}
               </li>
             );

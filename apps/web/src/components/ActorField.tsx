@@ -12,7 +12,7 @@ export function ActorField() {
 
   return (
     <div className="flex items-center gap-2">
-      <Label htmlFor="actor" className="whitespace-nowrap text-sm text-slate-600">
+      <Label htmlFor="actor" className="whitespace-nowrap text-sm text-muted-foreground">
         Você é:
       </Label>
       <Input

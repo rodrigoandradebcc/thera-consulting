@@ -12,10 +12,10 @@ export function EmptyState({
 }) {
   return (
     <div className="grid place-items-center gap-3 rounded-lg border border-dashed border-border p-12 text-center">
-      <Inbox aria-hidden="true" className="size-8 text-slate-400" />
+      <Inbox aria-hidden="true" className="size-8 text-muted-foreground" />
       <div>
         <p className="font-medium">{title}</p>
-        <p className="text-sm text-slate-600">{description}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
       </div>
       {action}
     </div>

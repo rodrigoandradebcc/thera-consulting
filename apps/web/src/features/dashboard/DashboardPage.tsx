@@ -58,7 +58,7 @@ export function DashboardPage() {
         <>
           {/* Tabela em telas médias e maiores */}
           <div className="hidden md:block">
-            <div className="overflow-hidden rounded-lg border border-border bg-white">
+            <div className="overflow-hidden rounded-lg border border-border bg-card">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -89,7 +89,7 @@ export function DashboardPage() {
           {/* Cards em telas pequenas */}
           <ul className="grid gap-3 md:hidden">
             {upcoming.map(({ order, schedule }) => (
-              <li key={order.id} className="rounded-lg border border-border bg-white p-4">
+              <li key={order.id} className="rounded-lg border border-border bg-card p-4">
                 <div className="flex items-baseline justify-between">
                   <Link
                     to={`/sales-orders/${order.id}`}
@@ -100,9 +100,9 @@ export function DashboardPage() {
                   <ScheduleStatusBadge status={schedule.status} />
                 </div>
                 <dl className="mt-2 grid grid-cols-2 gap-1 text-sm">
-                  <dt className="text-slate-600">Data</dt>
+                  <dt className="text-muted-foreground">Data</dt>
                   <dd className="tabular text-right">{dateBR(schedule.scheduledDate)}</dd>
-                  <dt className="text-slate-600">Janela</dt>
+                  <dt className="text-muted-foreground">Janela</dt>
                   <dd className="text-right">{WINDOW_LABEL[schedule.window]}</dd>
                 </dl>
               </li>

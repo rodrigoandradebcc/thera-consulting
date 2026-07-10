@@ -17,9 +17,10 @@ export function StatusStepper({ current }: { current: SalesOrderStatus }) {
             aria-current={state === 'current' ? 'step' : undefined}
             className={cn(
               'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium ring-1 ring-inset',
-              state === 'done' && 'bg-emerald-50 text-emerald-800 ring-emerald-200',
+              state === 'done' &&
+                'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-200 dark:ring-emerald-900',
               state === 'current' && 'bg-primary text-on-primary ring-primary',
-              state === 'todo' && 'bg-white text-slate-500 ring-border',
+              state === 'todo' && 'bg-card text-muted-foreground ring-border',
             )}
           >
             {state === 'done' && <Check aria-hidden="true" className="size-3.5" />}

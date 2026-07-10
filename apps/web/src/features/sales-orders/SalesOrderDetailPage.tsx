@@ -61,7 +61,7 @@ export function SalesOrderDetailPage() {
           <TabsTrigger value="auditoria">Auditoria</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="itens" className="rounded-lg border border-border bg-white">
+        <TabsContent value="itens" className="rounded-lg border border-border bg-card">
           <SalesOrderItemsTab items={order.items} total={order.total} />
         </TabsContent>
 

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router';
 import { ActorField } from '@/components/ActorField';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { cn } from '@/lib/utils';
 
 const NAV: Array<{ to: string; label: string; icon: LucideIcon; end?: boolean }> = [
@@ -30,7 +31,7 @@ export function AppLayout() {
         Pular para o conteúdo
       </a>
 
-      <aside className="border-b border-border bg-white md:border-b-0 md:border-r">
+      <aside className="border-b border-border bg-card md:border-b-0 md:border-r">
         <div className="p-4 text-lg font-semibold text-primary">OVGS</div>
         <nav aria-label="Navegação principal" className="flex gap-1 overflow-x-auto p-2 md:block">
           {NAV.map(({ to, label, icon: Icon, end }) => (
@@ -42,7 +43,7 @@ export function AppLayout() {
                 cn(
                   'flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-2 text-sm transition-colors',
                   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
-                  isActive ? 'bg-primary text-on-primary' : 'text-slate-700 hover:bg-muted',
+                  isActive ? 'bg-primary text-on-primary' : 'text-foreground hover:bg-muted',
                 )
               }
             >
@@ -54,8 +55,9 @@ export function AppLayout() {
       </aside>
 
       <div className="flex flex-col">
-        <header className="flex justify-end border-b border-border bg-white px-6 py-3">
+        <header className="flex items-center justify-end gap-3 border-b border-border bg-card px-6 py-3">
           <ActorField />
+          <ThemeToggle />
         </header>
         <main id="conteudo" className="flex-1 p-6">
           <Outlet />

@@ -44,7 +44,7 @@ function ConfirmButton({ salesOrderId, full }: { salesOrderId: string; full: boo
       <Button size="sm" variant="outline" disabled={full || confirm.isPending} onClick={() => void run()}>
         Confirmar
       </Button>
-      {full && <span className="text-xs text-amber-800">Slot cheio</span>}
+      {full && <span className="text-xs text-amber-800 dark:text-amber-300">Slot cheio</span>}
     </div>
   );
 }
@@ -81,7 +81,7 @@ export function SchedulingPage() {
         description={`Capacidade de ${MAX_DELIVERIES_PER_SLOT} entregas confirmadas por data e janela`}
       />
 
-      <div className="overflow-hidden rounded-lg border border-border bg-white">
+      <div className="overflow-hidden rounded-lg border border-border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -112,7 +112,7 @@ export function SchedulingPage() {
                     {schedule.status === 'PENDENTE' ? (
                       <ConfirmButton salesOrderId={order.id} full={full} />
                     ) : (
-                      <span className="text-sm text-slate-500">—</span>
+                      <span className="text-sm text-muted-foreground">—</span>
                     )}
                   </TableCell>
                 </TableRow>

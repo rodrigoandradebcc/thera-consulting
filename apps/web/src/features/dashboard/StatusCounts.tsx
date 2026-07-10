@@ -31,9 +31,9 @@ export function StatusCounts({ orders }: { orders: readonly SalesOrder[] }) {
         <Link
           key={status}
           to={`/sales-orders?status=${status}`}
-          className="rounded-lg border border-border bg-white p-4 transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="rounded-lg border border-border bg-card p-4 transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
-          <p className="text-xs font-medium text-slate-600">{status.replace('_', ' ')}</p>
+          <p className="text-xs font-medium text-muted-foreground">{status.replace('_', ' ')}</p>
           <p className="tabular text-3xl font-semibold">{counts[status]}</p>
         </Link>
       ))}

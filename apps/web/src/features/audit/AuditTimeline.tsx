@@ -14,7 +14,7 @@ function Diff({ log }: { log: AuditLog }) {
       <dl className="mt-2 grid gap-1 text-sm">
         {Object.entries(log.after ?? {}).map(([field, value]) => (
           <div key={field} className="flex gap-2">
-            <dt className="text-slate-600">{labelFor(field)}:</dt>
+            <dt className="text-muted-foreground">{labelFor(field)}:</dt>
             <dd className="tabular">{String(value)}</dd>
           </div>
         ))}
@@ -28,13 +28,13 @@ function Diff({ log }: { log: AuditLog }) {
     <dl className="mt-2 grid gap-1 text-sm">
       {[...fields].map((field) => (
         <div key={field} className="flex flex-wrap items-center gap-2">
-          <dt className="text-slate-600">{labelFor(field)}:</dt>
+          <dt className="text-muted-foreground">{labelFor(field)}:</dt>
           <dd className="flex items-center gap-2">
-            <span className="tabular rounded bg-slate-100 px-1.5 py-0.5">
+            <span className="tabular rounded bg-muted px-1.5 py-0.5">
               {String(log.before?.[field] ?? '—')}
             </span>
-            <ArrowRight aria-hidden="true" className="size-3.5 text-slate-400" />
-            <span className="tabular rounded bg-emerald-50 px-1.5 py-0.5 font-medium">
+            <ArrowRight aria-hidden="true" className="size-3.5 text-muted-foreground" />
+            <span className="tabular rounded bg-emerald-100 px-1.5 py-0.5 font-medium dark:bg-emerald-950">
               {String(log.after?.[field] ?? '—')}
             </span>
           </dd>
@@ -56,14 +56,14 @@ export function AuditTimeline({ salesOrderId }: { salesOrderId: string }) {
   return (
     <ol className="space-y-3">
       {query.data.map((log) => (
-        <li key={log.id} className="rounded-lg border border-border bg-white p-4">
+        <li key={log.id} className="rounded-lg border border-border bg-card p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-medium">{ACTION_TEXT[log.action]}</p>
-            <time dateTime={log.createdAt} className="tabular text-xs text-slate-500">
+            <time dateTime={log.createdAt} className="tabular text-xs text-muted-foreground">
               {dateTimeBR(log.createdAt)}
             </time>
           </div>
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-muted-foreground">
             {log.entity === 'SALES_ORDER' ? 'Ordem de venda' : 'Agendamento'} • por{' '}
             <span className="font-medium">{log.actor ?? 'sistema'}</span>
           </p>

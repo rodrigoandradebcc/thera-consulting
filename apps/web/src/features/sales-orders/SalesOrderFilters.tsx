@@ -22,7 +22,7 @@ export function SalesOrderFilters() {
   const transportTypes = useTransportTypesQuery();
 
   return (
-    <section aria-label="Filtros" className="mb-4 grid gap-3 rounded-lg border border-border bg-white p-4 md:grid-cols-3 lg:grid-cols-6">
+    <section aria-label="Filtros" className="mb-4 grid gap-3 rounded-lg border border-border bg-card p-4 md:grid-cols-3 lg:grid-cols-6">
       <div>
         <Label htmlFor="f-status">Status</Label>
         <Select
@@ -89,7 +89,7 @@ export function SalesOrderFilters() {
           value={filters.scheduledTo ?? ''}
           onChange={(e) => setFilter('scheduledTo', e.target.value)}
         />
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-muted-foreground">
           Filtrar por data de entrega esconde as OVs que ainda não têm agendamento.
         </p>
       </div>
