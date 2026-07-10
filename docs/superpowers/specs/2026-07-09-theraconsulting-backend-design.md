@@ -202,7 +202,7 @@ model Item {
 
 model SalesOrder {
   id              String            @id @default(uuid())
-  number          String            @unique
+  orderNumber     Int               @unique @default(autoincrement())
   customerId      String
   transportTypeId String
   status          SalesOrderStatus  @default(CRIADA)
@@ -265,6 +265,8 @@ model AuditLog {
 **`SalesOrderItem` é join explícito com payload.** Um N:N puro perderia `quantity`. Além disso, `unitPrice` é copiado do `Item` no momento da criação da OV: se o preço do catálogo mudar depois, o valor histórico da venda não pode mudar junto.
 
 **`Decimal(12,2)` para dinheiro.** Nunca `Float` — erro de ponto flutuante em valor monetário é defeito, não arredondamento.
+
+**`orderNumber` é `Int @default(autoincrement())`.** Gerar `"OV-" + (count + 1)` no service produz número duplicado sob duas criações concorrentes: ambas leem o mesmo `count`. A sequence do Postgres é atômica por construção. A formatação (`OV-000042`) é apresentação, e vive no response DTO — não no banco.
 
 **`DeliverySchedule.salesOrderId` é `@unique`.** É isso que transforma o 1:N implícito do Prisma em 1:1 real.
 
