@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: ovgs-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: thera
+      POSTGRES_PASSWORD: thera
+      POSTGRES_DB: thera
+    ports:
+      - '5432:5432'
+    volumes:
+      - ovgs-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U thera -d thera']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ovgs-pgdata:
