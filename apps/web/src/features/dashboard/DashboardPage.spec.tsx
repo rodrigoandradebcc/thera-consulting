@@ -81,4 +81,19 @@ describe('DashboardPage', () => {
     expect(await screen.findByText(salesOrderFixture.number)).toBeInTheDocument();
     expect(screen.getByText('09/07/2026')).toBeInTheDocument();
   });
+
+  it('renderiza cards de status com zero ordens', async () => {
+    server.use(
+      http.get(`${BASE}/sales-orders`, () =>
+        HttpResponse.json([
+          { ...salesOrderFixture, id: '1', status: 'CRIADA' },
+          { ...salesOrderFixture, id: '2', status: 'CRIADA' },
+        ]),
+      ),
+    );
+    renderPage();
+
+    const planejada = await screen.findByRole('link', { name: /PLANEJADA/ });
+    expect(planejada).toHaveTextContent('0');
+  });
 });
