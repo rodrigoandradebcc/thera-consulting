@@ -11,9 +11,14 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="grid place-items-center gap-3 rounded-lg border border-dashed border-border p-12 text-center">
-      <Inbox aria-hidden="true" className="size-8 text-muted-foreground" />
-      <div>
+    <div className="grid place-items-center gap-4 rounded-xl border border-dashed border-border bg-card/40 p-12 text-center">
+      <span
+        aria-hidden="true"
+        className="grid size-12 place-items-center rounded-full bg-muted text-muted-foreground"
+      >
+        <Inbox className="size-6" />
+      </span>
+      <div className="space-y-1">
         <p className="font-medium">{title}</p>
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
