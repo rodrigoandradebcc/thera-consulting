@@ -26,7 +26,14 @@ Merge base: `b4b8fc7`
 - [x] Task 12: complete (commits 117dd73..97c19a3, review clean). 82 testes. Plano tinha 3 armadilhas: `schedule!`, `isoDate` em UTC (mesmo bug de fuso da task 9), e `countByStatus as Record`. Todas corrigidas. Teste de zero-count adicionado com regressão provada.
 - [x] Task 13: complete (commit 763c4e4). 82 testes. Tabelas viram cards em mobile (lista de OVs + dashboard). READMEs do front e da raiz. Verificação estática de a11y (aria-hidden, role=alert, skip-link, reduced-motion, zero emoji/parseFloat/assertion) passou. PENDENTE MANUAL: audit em navegador vivo (teclado, reduced-motion visual, Lighthouse) — extensão do Chrome não conectada, não executado.
 
-## Findings Minor (para o review final triar)
+## Review final de branch — resolvido
+
+- Verdict: ready to merge, zero defeitos de correção nas costuras.
+- Fixes aplicados (commit 492d8cf): `todayLocalIso` extraído (dedup do helper de fuso), 404→EmptyState no detalhe, guard `isApiErrorBody` endurecido.
+- Dark mode implementado (commit 6362465): spec prometia, código não tinha. Sistema de tokens semânticos `:root`/`.dark`, provider + toggle, varredura da paleta. 98 testes.
+- Débitos aceitos (não bloqueiam merge): `tsconfig.node.json` sem strict; `main.tsx` `getElementById('root')!` do scaffold; `toScheduledOrders` duplicado; `isValidation` exportado mas não usado.
+
+## Findings Minor (histórico)
 
 - Task 2: `apps/web/tsconfig.node.json` não tem `"strict": true`, ao contrário de `tsconfig.app.json`. Hoje só cobre `vite.config.ts`. Se crescer (setup do MSW, plugins), type-check fica mais frouxo que o resto.
 - Task 3: `isApiErrorBody` (`lib/errors.ts`) só checa `'statusCode' in data`. Um corpo `{statusCode: 500}` sem `error`/`message` satisfaz o type guard e produz `undefined` tipado como `string`. Contrato da API sempre manda os três, mas o guard mente.
