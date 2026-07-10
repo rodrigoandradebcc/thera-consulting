@@ -86,7 +86,7 @@ export function CreateSalesOrderPage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-3xl space-y-6">
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <Label htmlFor="customerId">Cliente</Label>
+            <Label htmlFor="customerId" className="mb-1.5">Cliente</Label>
             <select id="customerId" className={selectClass} {...form.register('customerId')}>
               <option value="">Selecione…</option>
               {(customers.data ?? []).filter((c) => c.active).map((c) => (
@@ -101,7 +101,7 @@ export function CreateSalesOrderPage() {
           </div>
 
           <div>
-            <Label htmlFor="transportTypeId">Tipo de transporte</Label>
+            <Label htmlFor="transportTypeId" className="mb-1.5">Tipo de transporte</Label>
             <select
               id="transportTypeId"
               className={selectClass}
@@ -134,7 +134,7 @@ export function CreateSalesOrderPage() {
           {lines.fields.map((field, index) => (
             <div key={field.id} className="flex items-end gap-3">
               <div className="flex-1">
-                <Label htmlFor={`item-${index}`}>{`Item ${index + 1}`}</Label>
+                <Label htmlFor={`item-${index}`} className="mb-1.5">{`Item ${index + 1}`}</Label>
                 <select
                   id={`item-${index}`}
                   className={selectClass}
@@ -152,7 +152,7 @@ export function CreateSalesOrderPage() {
                 )}
               </div>
               <div className="w-32">
-                <Label htmlFor={`qty-${index}`}>{`Quantidade ${index + 1}`}</Label>
+                <Label htmlFor={`qty-${index}`} className="mb-1.5">{`Quantidade ${index + 1}`}</Label>
                 <Input
                   id={`qty-${index}`}
                   type="number"

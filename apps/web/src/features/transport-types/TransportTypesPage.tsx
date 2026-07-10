@@ -53,7 +53,7 @@ function CreateDialog() {
         <DialogHeader><DialogTitle>Novo tipo de transporte</DialogTitle></DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="code">Código</Label>
+            <Label htmlFor="code" className="mb-1.5">Código</Label>
             <Input id="code" {...form.register('code')} />
             <p className="mt-1 text-xs text-muted-foreground">Imutável após a criação.</p>
             {form.formState.errors.code && (
@@ -61,7 +61,7 @@ function CreateDialog() {
             )}
           </div>
           <div>
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name" className="mb-1.5">Nome</Label>
             <Input id="name" {...form.register('name')} />
           </div>
           <DialogFooter><Button type="submit" disabled={create.isPending}>Criar</Button></DialogFooter>

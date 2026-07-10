@@ -59,7 +59,7 @@ function CreateItemDialog() {
         <DialogHeader><DialogTitle>Novo item</DialogTitle></DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="sku">SKU</Label>
+            <Label htmlFor="sku" className="mb-1.5">SKU</Label>
             <Input id="sku" {...form.register('sku')} />
             {form.formState.errors.sku && (
               <p role="alert" className="mt-1 text-sm text-destructive">
@@ -68,7 +68,7 @@ function CreateItemDialog() {
             )}
           </div>
           <div>
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name" className="mb-1.5">Nome</Label>
             <Input id="name" {...form.register('name')} />
             {form.formState.errors.name && (
               <p role="alert" className="mt-1 text-sm text-destructive">
@@ -77,7 +77,7 @@ function CreateItemDialog() {
             )}
           </div>
           <div>
-            <Label htmlFor="unitPrice">Preço unitário</Label>
+            <Label htmlFor="unitPrice" className="mb-1.5">Preço unitário</Label>
             <Input id="unitPrice" inputMode="decimal" {...form.register('unitPrice')} />
             <p className="mt-1 text-xs text-muted-foreground">
               Duas casas decimais, ex.: 89.50. A API não aceita outros formatos.

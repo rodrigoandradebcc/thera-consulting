@@ -24,7 +24,7 @@ export function SalesOrderFilters() {
   return (
     <section aria-label="Filtros" className="mb-4 grid gap-3 rounded-lg border border-border bg-card p-4 md:grid-cols-3 lg:grid-cols-6">
       <div>
-        <Label htmlFor="f-status">Status</Label>
+        <Label htmlFor="f-status" className="mb-1.5">Status</Label>
         <Select
           value={filters.status ?? ALL}
           onValueChange={(v) => setFilter('status', v === ALL ? undefined : v)}
@@ -40,7 +40,7 @@ export function SalesOrderFilters() {
       </div>
 
       <div>
-        <Label htmlFor="f-customer">Cliente</Label>
+        <Label htmlFor="f-customer" className="mb-1.5">Cliente</Label>
         <Select
           value={filters.customerId ?? ALL}
           onValueChange={(v) => setFilter('customerId', v === ALL ? undefined : v)}
@@ -56,7 +56,7 @@ export function SalesOrderFilters() {
       </div>
 
       <div>
-        <Label htmlFor="f-transport">Transporte</Label>
+        <Label htmlFor="f-transport" className="mb-1.5">Transporte</Label>
         <Select
           value={filters.transportTypeId ?? ALL}
           onValueChange={(v) => setFilter('transportTypeId', v === ALL ? undefined : v)}
@@ -72,7 +72,7 @@ export function SalesOrderFilters() {
       </div>
 
       <div>
-        <Label htmlFor="f-from">Entrega de</Label>
+        <Label htmlFor="f-from" className="mb-1.5">Entrega de</Label>
         <Input
           id="f-from"
           type="date"
@@ -82,7 +82,7 @@ export function SalesOrderFilters() {
       </div>
 
       <div>
-        <Label htmlFor="f-to">Entrega até</Label>
+        <Label htmlFor="f-to" className="mb-1.5">Entrega até</Label>
         <Input
           id="f-to"
           type="date"

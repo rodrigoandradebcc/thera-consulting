@@ -59,21 +59,21 @@ function CreateCustomerDialog() {
         <DialogHeader><DialogTitle>Novo cliente</DialogTitle></DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name" className="mb-1.5">Nome</Label>
             <Input id="name" {...form.register('name')} />
             {form.formState.errors.name && (
               <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.name.message}</p>
             )}
           </div>
           <div>
-            <Label htmlFor="document">Documento</Label>
+            <Label htmlFor="document" className="mb-1.5">Documento</Label>
             <Input id="document" inputMode="numeric" {...form.register('document')} />
             {form.formState.errors.document && (
               <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.document.message}</p>
             )}
           </div>
           <div>
-            <Label htmlFor="email">E-mail (opcional)</Label>
+            <Label htmlFor="email" className="mb-1.5">E-mail (opcional)</Label>
             <Input id="email" type="email" {...form.register('email')} />
             {form.formState.errors.email && (
               <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.email.message}</p>

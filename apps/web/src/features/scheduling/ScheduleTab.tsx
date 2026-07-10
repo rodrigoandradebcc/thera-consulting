@@ -68,7 +68,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <Label htmlFor="scheduledDate">Data de entrega</Label>
+          <Label htmlFor="scheduledDate" className="mb-1.5">Data de entrega</Label>
           <Input id="scheduledDate" type="date" {...form.register('scheduledDate')} />
           {form.formState.errors.scheduledDate && (
             <p role="alert" className="mt-1 text-sm text-destructive">
@@ -78,7 +78,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
         </div>
 
         <div>
-          <Label htmlFor="window">Janela de atendimento</Label>
+          <Label htmlFor="window" className="mb-1.5">Janela de atendimento</Label>
           <select id="window" className={selectClass} {...form.register('window')}>
             {windowOptions.map((w) => (
               <option key={w} value={w}>
