@@ -90,4 +90,46 @@ describe('TransportTypesPage', () => {
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent('Código já cadastrado.');
   });
+
+  it('abre o diálogo de edição pré-preenchido com o nome atual e mostra o código como somente leitura', async () => {
+    server.use(
+      http.get(`${BASE}/transport-types`, () =>
+        HttpResponse.json([{ id: TRANSPORT, code: 'CAMINHAO', name: 'Caminhão', active: true }]),
+      ),
+    );
+    renderPage();
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole('button', { name: 'Editar tipo de transporte Caminhão' }));
+
+    expect(await screen.findByLabelText('Nome')).toHaveValue('Caminhão');
+    const codeInput = screen.getByLabelText('Código');
+    expect(codeInput).toHaveValue('CAMINHAO');
+    expect(codeInput).toBeDisabled();
+  });
+
+  it('ao editar o nome e salvar, envia PATCH { name } sem o campo code', async () => {
+    const captured = vi.fn();
+    server.use(
+      http.get(`${BASE}/transport-types`, () =>
+        HttpResponse.json([{ id: TRANSPORT, code: 'CAMINHAO', name: 'Caminhão', active: true }]),
+      ),
+      http.patch(`${BASE}/transport-types/${TRANSPORT}`, async ({ request }) => {
+        captured(await request.json());
+        return HttpResponse.json({ id: TRANSPORT, code: 'CAMINHAO', name: 'Caminhão Grande', active: true });
+      }),
+    );
+    renderPage();
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole('button', { name: 'Editar tipo de transporte Caminhão' }));
+    const nameInput = await screen.findByLabelText('Nome');
+    await user.clear(nameInput);
+    await user.type(nameInput, 'Caminhão Grande');
+    await user.click(screen.getByRole('button', { name: 'Salvar' }));
+
+    await waitFor(() => expect(captured).toHaveBeenCalled());
+    expect(captured.mock.calls[0][0]).toEqual({ name: 'Caminhão Grande' });
+    expect(captured.mock.calls[0][0]).not.toHaveProperty('code');
+  });
 });

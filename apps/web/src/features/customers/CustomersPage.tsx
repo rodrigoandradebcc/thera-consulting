@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChevronDown, ChevronRight, Plus } from 'lucide-react';
+import { ChevronDown, ChevronRight, Pencil, Plus } from 'lucide-react';
 import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -27,6 +27,12 @@ const customerSchema = z.object({
   email: z.union([z.string().email('E-mail inválido.'), z.literal('')]),
 });
 type CustomerForm = z.infer<typeof customerSchema>;
+
+const editCustomerSchema = z.object({
+  name: z.string().min(1, 'Informe o nome.'),
+  email: z.union([z.string().email('E-mail inválido.'), z.literal('')]),
+});
+type EditCustomerForm = z.infer<typeof editCustomerSchema>;
 
 function CreateCustomerDialog() {
   const [open, setOpen] = useState(false);
@@ -80,6 +86,77 @@ function CreateCustomerDialog() {
             )}
           </div>
           <DialogFooter><Button type="submit" disabled={create.isPending}>Criar</Button></DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditCustomerDialog({
+  id,
+  name,
+  email,
+  documentNumber,
+}: {
+  id: string;
+  name: string;
+  email: string | null;
+  documentNumber: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const update = useUpdateCustomer(id);
+  const form = useForm<EditCustomerForm>({
+    resolver: zodResolver(editCustomerSchema),
+    defaultValues: { name, email: email ?? '' },
+  });
+
+  function handleOpenChange(next: boolean): void {
+    if (next) form.reset({ name, email: email ?? '' });
+    setOpen(next);
+  }
+
+  async function onSubmit(values: EditCustomerForm): Promise<void> {
+    try {
+      const { email: emailValue, ...rest } = values;
+      await update.mutateAsync(emailValue === '' ? rest : { ...rest, email: emailValue });
+      toast.success('Cliente atualizado.');
+      setOpen(false);
+    } catch (error) {
+      const apiError = toApiError(error);
+      if (apiError.statusCode === 409) form.setError('email', { message: apiError.message });
+      else toast.error(apiError.message);
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        <Button size="sm" variant="outline" aria-label={`Editar cliente ${name}`}>
+          <Pencil aria-hidden="true" className="size-4" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Editar cliente</DialogTitle></DialogHeader>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <Label htmlFor="edit-customer-name" className="mb-1.5">Nome</Label>
+            <Input id="edit-customer-name" {...form.register('name')} />
+            {form.formState.errors.name && (
+              <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.name.message}</p>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="edit-customer-document" className="mb-1.5">Documento</Label>
+            <Input id="edit-customer-document" value={documentNumber} disabled readOnly />
+          </div>
+          <div>
+            <Label htmlFor="edit-customer-email" className="mb-1.5">E-mail (opcional)</Label>
+            <Input id="edit-customer-email" type="email" {...form.register('email')} />
+            {form.formState.errors.email && (
+              <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.email.message}</p>
+            )}
+          </div>
+          <DialogFooter><Button type="submit" disabled={update.isPending}>Salvar</Button></DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
@@ -183,7 +260,15 @@ export function CustomersPage() {
                       <TableCell className="tabular">{customer.document}</TableCell>
                       <TableCell>{customer.active ? 'Ativo' : 'Inativo'}</TableCell>
                       <TableCell className="text-right">
-                        <DeactivateCustomer id={customer.id} active={customer.active} />
+                        <div className="flex items-center justify-end gap-2">
+                          <EditCustomerDialog
+                            id={customer.id}
+                            name={customer.name}
+                            email={customer.email}
+                            documentNumber={customer.document}
+                          />
+                          <DeactivateCustomer id={customer.id} active={customer.active} />
+                        </div>
                       </TableCell>
                     </TableRow>
                     {open && (
