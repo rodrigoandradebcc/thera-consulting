@@ -1,0 +1,8 @@
+packages:
+  - 'apps/*'
+
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - esbuild
+  - prisma
+  - unrs-resolver

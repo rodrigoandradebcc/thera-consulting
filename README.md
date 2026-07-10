@@ -10,12 +10,14 @@ A regra central do sistema é um **fluxo de status estritamente linear**, e toda
 
 Pré-requisitos: **Node >= 20.19**, **pnpm**, **Docker**.
 
+Todos os comandos rodam **na raiz do repositório**.
+
 ```bash
-pnpm install         # instala e roda `prisma generate` no postinstall
+pnpm install         # instala o workspace e roda `prisma generate`
 pnpm db:up           # sobe o Postgres 17 (docker compose)
 pnpm db:migrate      # aplica as migrations
 pnpm db:seed         # popula dados de exemplo (idempotente)
-pnpm start:dev       # API em http://localhost:3000/api
+pnpm api:dev         # API em http://localhost:3000/api
 ```
 
 Swagger: **http://localhost:3000/docs**
@@ -38,8 +40,10 @@ Os testes e2e rodam contra um Postgres real, no schema `test` (`.env.test`), iso
 | `pnpm db:migrate` | `prisma migrate dev` |
 | `pnpm db:seed` | popula dados de exemplo |
 | `pnpm db:reset` | dropa o banco, reaplica as migrations e roda o seed |
-| `pnpm build` | compila para `dist/` |
-| `pnpm start:prod` | roda o build |
+| `pnpm api:dev` | API em modo watch |
+| `pnpm api:build` | compila a API |
+
+Dentro de `apps/api` os scripts do NestJS estão todos disponíveis (`start:prod`, `lint`, `format`, `test:cov`).
 
 ---
 
@@ -64,10 +68,20 @@ Os testes e2e rodam contra um Postgres real, no schema `test` (`.env.test`), iso
 
 ## Decisões arquiteturais
 
-Módulos organizados **por domínio**, não por camada técnica:
+O repositório é um **monorepo pnpm**. O Docker Compose e a documentação vivem na raiz porque servem às duas aplicações:
 
 ```
-src/
+docker-compose.yml     Postgres, compartilhado
+docs/                  spec de design e plano de implementação
+apps/
+  api/                 backend NestJS (este documento)
+  web/                 frontend (em desenvolvimento)
+```
+
+Dentro da API, os módulos são organizados **por domínio**, não por camada técnica:
+
+```
+apps/api/src/
   common/          prisma, exceções, filtros, decorators, config
   modules/
     customers/     transport-types/     items/
