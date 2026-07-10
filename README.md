@@ -37,7 +37,7 @@ Os testes e2e rodam contra um Postgres real, no schema `test` (`.env.test`), iso
 | `pnpm db:up` / `db:down` | sobe/derruba o Postgres |
 | `pnpm db:migrate` | `prisma migrate dev` |
 | `pnpm db:seed` | popula dados de exemplo |
-| `pnpm db:reset` | recria o banco do zero |
+| `pnpm db:reset` | dropa o banco, reaplica as migrations e roda o seed |
 | `pnpm build` | compila para `dist/` |
 | `pnpm start:prod` | roda o build |
 
