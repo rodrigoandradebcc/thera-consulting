@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { ErrorState } from '@/components/ErrorState';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -17,9 +18,6 @@ export function CustomerTransportTypes({ customerId }: { customerId: string }) {
   const link = useLinkTransportTypes(customerId);
   const [selected, setSelected] = useState<string[]>([]);
 
-  const current = authorized.data ?? [];
-  const available = (transportTypes.data ?? []).filter((t) => t.active && !current.includes(t.id));
-
   async function add(): Promise<void> {
     try {
       await link.mutateAsync(selected);
@@ -29,6 +27,36 @@ export function CustomerTransportTypes({ customerId }: { customerId: string }) {
       toast.error(toApiError(error).message);
     }
   }
+
+  // "Pendente" e "erro" nunca podem colapsar para "nenhum transporte": essa
+  // mensagem é crítica para o negócio (bloqueia OVs) e só é verdadeira
+  // quando a busca teve sucesso e voltou vazia.
+  if (authorized.isPending || transportTypes.isPending) {
+    return (
+      <div className="space-y-3 rounded-lg border border-border bg-muted p-4">
+        <p className="text-sm font-medium">Transportes autorizados</p>
+        <p className="text-sm text-slate-600">Carregando transportes…</p>
+      </div>
+    );
+  }
+
+  if (authorized.isError || transportTypes.isError) {
+    return (
+      <div className="space-y-3 rounded-lg border border-border bg-muted p-4">
+        <p className="text-sm font-medium">Transportes autorizados</p>
+        <ErrorState
+          error={authorized.error ?? transportTypes.error}
+          onRetry={() => {
+            void authorized.refetch();
+            void transportTypes.refetch();
+          }}
+        />
+      </div>
+    );
+  }
+
+  const current = authorized.data;
+  const available = transportTypes.data.filter((t) => t.active && !current.includes(t.id));
 
   return (
     <div className="space-y-3 rounded-lg border border-border bg-muted p-4">
@@ -41,7 +69,7 @@ export function CustomerTransportTypes({ customerId }: { customerId: string }) {
       ) : (
         <ul className="flex flex-wrap gap-2">
           {current.map((id) => {
-            const t = (transportTypes.data ?? []).find((x) => x.id === id);
+            const t = transportTypes.data.find((x) => x.id === id);
             return (
               <li key={id} className="rounded-full bg-white px-2.5 py-1 text-xs ring-1 ring-border">
                 {t?.name ?? id}

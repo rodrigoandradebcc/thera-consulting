@@ -101,7 +101,11 @@ function DeactivateCustomer({ id, active }: { id: string; active: boolean }) {
   }
 
   if (!active) {
-    return <Button size="sm" variant="outline" onClick={() => void run()}>Reativar</Button>;
+    return (
+      <Button size="sm" variant="outline" disabled={update.isPending} onClick={() => void run()}>
+        Reativar
+      </Button>
+    );
   }
 
   return (
@@ -115,7 +119,9 @@ function DeactivateCustomer({ id, active }: { id: string; active: boolean }) {
         </p>
         <DialogFooter>
           <Button variant="ghost" onClick={() => setConfirming(false)}>Cancelar</Button>
-          <Button variant="destructive" onClick={() => void run()}>Desativar</Button>
+          <Button variant="destructive" disabled={update.isPending} onClick={() => void run()}>
+            Desativar
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { PageHeader } from '@/components/PageHeader';
 import { TableSkeleton } from '@/components/TableSkeleton';
@@ -85,7 +86,11 @@ function ToggleActive({ id, active }: { id: string; active: boolean }) {
   }
 
   if (!active) {
-    return <Button size="sm" variant="outline" onClick={() => void run()}>Reativar</Button>;
+    return (
+      <Button size="sm" variant="outline" disabled={update.isPending} onClick={() => void run()}>
+        Reativar
+      </Button>
+    );
   }
 
   return (
@@ -101,7 +106,9 @@ function ToggleActive({ id, active }: { id: string; active: boolean }) {
         </p>
         <DialogFooter>
           <Button variant="ghost" onClick={() => setConfirming(false)}>Cancelar</Button>
-          <Button variant="destructive" onClick={() => void run()}>Desativar</Button>
+          <Button variant="destructive" disabled={update.isPending} onClick={() => void run()}>
+            Desativar
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -121,7 +128,10 @@ export function TransportTypesPage() {
 
       {query.isPending && <TableSkeleton />}
       {query.isError && <ErrorState error={query.error} onRetry={() => void query.refetch()} />}
-      {query.isSuccess && (
+      {query.isSuccess && query.data.length === 0 && (
+        <EmptyState title="Nenhum tipo de transporte" description="Cadastre o primeiro tipo de transporte." />
+      )}
+      {query.isSuccess && query.data.length > 0 && (
         <div className="overflow-hidden rounded-lg border border-border bg-white">
           <Table>
             <TableHeader>

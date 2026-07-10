@@ -17,7 +17,12 @@ export function useCustomersQuery() {
 export function useCustomerTransportTypesQuery(customerId: string | undefined) {
   return useQuery({
     queryKey: queryKeys.customers.transportTypes(customerId ?? ''),
-    queryFn: () => listCustomerTransportTypes(customerId ?? ''),
+    queryFn: () => {
+      if (customerId === undefined || customerId === '') {
+        throw new Error('useCustomerTransportTypesQuery: customerId ausente apesar do guard `enabled`.');
+      }
+      return listCustomerTransportTypes(customerId);
+    },
     enabled: customerId !== undefined && customerId.length > 0,
   });
 }

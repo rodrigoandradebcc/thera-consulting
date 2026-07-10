@@ -52,4 +52,20 @@ describe('ItemsPage', () => {
     await waitFor(() => expect(captured).toHaveBeenCalled());
     expect(captured.mock.calls[0][0]).toEqual({ sku: 'SKU-002', name: 'Caixa', unitPrice: '89.50' });
   });
+
+  it('rejeita preço com uma casa decimal e mostra o texto de ajuda de duas casas', async () => {
+    server.use(http.get(`${BASE}/items`, () => HttpResponse.json([])));
+    renderPage();
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole('button', { name: /novo item/i }));
+    await user.type(screen.getByLabelText('SKU'), 'SKU-003');
+    await user.type(screen.getByLabelText('Nome'), 'Pallet');
+    await user.type(screen.getByLabelText('Preço unitário'), '89.5');
+    await user.click(screen.getByRole('button', { name: /^criar$/i }));
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/duas casas decimais/i);
+    expect(screen.getByText(/duas casas decimais, ex\.: 89\.50/i)).toBeInTheDocument();
+  });
 });
