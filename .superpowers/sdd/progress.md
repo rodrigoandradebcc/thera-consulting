@@ -20,7 +20,7 @@ Merge base: `b4b8fc7`
 - [x] Task 6: complete (commits 4e526a0..c33e494, review clean). 29 testes. Dois fixes: (a) hooks de mutação de sales-orders tinham sido descartados por erro de instrução minha; (b) testes de filtro não observavam a URL — agora leem `router.state.location.search`, provado com experimento de no-op.
 - [x] Task 7: complete (commits d54d89d..0496760, review clean). 41 testes. Fix de 4 achados: erros por linha de item agora renderizam; transportTypeId reseta ao trocar cliente; gate de loading revertido (a corrida era do teste); estimateTotalCents trunca >2 decimais.
 - [x] Task 8: complete (commit aec1b1c, review clean, zero achados). 49 testes. `as NonNullable` do plano substituído por re-narrowing real (`const nextStatus = next` antes da closure).
-- [ ] Task 9: Agendamento
+- [x] Task 9: complete (commits 913db9b..a054d29, review clean). 58 testes. Bug real corrigido: `today()` usava UTC e rejeitava agendar pra hoje entre 21h e 23h59 BRT. Teste de slot agora varia a janela. `isCountFull` centraliza o limite. 3 type assertions do plano eliminadas.
 - [ ] Task 10: Auditoria
 - [ ] Task 11: Cadastros
 - [ ] Task 12: Dashboard
