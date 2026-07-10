@@ -22,6 +22,7 @@ export function SalesOrdersListPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Operações"
         title="Ordens de Venda"
         description="Monitoramento operacional"
         actions={
@@ -54,7 +55,7 @@ export function SalesOrdersListPage() {
         <>
           {/* Tabela em telas médias e maiores */}
           <div className="hidden md:block">
-            <div className="overflow-hidden rounded-lg border border-border bg-card">
+            <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -93,7 +94,7 @@ export function SalesOrdersListPage() {
           {/* Cards em telas pequenas */}
           <ul className="grid gap-3 md:hidden">
             {query.data.map((order) => (
-              <li key={order.id} className="rounded-lg border border-border bg-card p-4">
+              <li key={order.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
                 <Link
                   to={`/sales-orders/${order.id}`}
                   className="block focus-visible:outline-2 focus-visible:outline-ring"

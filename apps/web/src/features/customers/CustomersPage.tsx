@@ -212,6 +212,7 @@ export function CustomersPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Cadastro"
         title="Clientes"
         description="Cada cliente precisa de ao menos um transporte autorizado para ter OVs."
         actions={<CreateCustomerDialog />}
@@ -224,7 +225,7 @@ export function CustomersPage() {
       )}
 
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-card">
+        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
           <Table>
             <TableHeader>
               <TableRow>

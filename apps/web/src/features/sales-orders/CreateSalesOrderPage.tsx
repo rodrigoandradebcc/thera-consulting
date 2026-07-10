@@ -81,7 +81,7 @@ export function CreateSalesOrderPage() {
 
   return (
     <>
-      <PageHeader title="Nova Ordem de Venda" />
+      <PageHeader eyebrow="Nova operação" title="Nova Ordem de Venda" />
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-3xl space-y-6">
         <div className="grid gap-4 md:grid-cols-2">
@@ -188,7 +188,7 @@ export function CreateSalesOrderPage() {
           )}
         </fieldset>
 
-        <div className="rounded-lg border border-border bg-muted p-4">
+        <div className="rounded-xl border border-border bg-muted p-4 shadow-panel">
           <p className="text-sm text-muted-foreground">Total estimado</p>
           <p className="tabular text-2xl font-semibold">{money((totalCents / 100).toFixed(2))}</p>
           <p className="text-xs text-muted-foreground">

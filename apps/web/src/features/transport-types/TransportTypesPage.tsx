@@ -173,6 +173,7 @@ export function TransportTypesPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Cadastro"
         title="Tipos de Transporte"
         description="Novos tipos entram sem alterar regra de negócio."
         actions={<CreateDialog />}
@@ -184,7 +185,7 @@ export function TransportTypesPage() {
         <EmptyState title="Nenhum tipo de transporte" description="Cadastre o primeiro tipo de transporte." />
       )}
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-border bg-card">
+        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
           <Table>
             <TableHeader>
               <TableRow>

@@ -44,6 +44,7 @@ export function SalesOrderDetailPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Ordem de venda"
         title={order.number}
         description={`Total ${money(order.total)}`}
         actions={<NextStatusButton order={order} />}
@@ -61,7 +62,7 @@ export function SalesOrderDetailPage() {
           <TabsTrigger value="auditoria">Auditoria</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="itens" className="rounded-lg border border-border bg-card">
+        <TabsContent value="itens" className="rounded-xl border border-border bg-card shadow-panel">
           <SalesOrderItemsTab items={order.items} total={order.total} />
         </TabsContent>
 

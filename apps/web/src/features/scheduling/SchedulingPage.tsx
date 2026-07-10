@@ -65,7 +65,7 @@ export function SchedulingPage() {
   if (scheduled.length === 0) {
     return (
       <>
-        <PageHeader title="Central de Agendamento" />
+        <PageHeader eyebrow="Logística" title="Central de Agendamento" />
         <EmptyState
           title="Nenhuma entrega agendada"
           description="Agende uma entrega a partir do detalhe de uma OV."
@@ -77,11 +77,12 @@ export function SchedulingPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Logística"
         title="Central de Agendamento"
         description={`Capacidade de ${MAX_DELIVERIES_PER_SLOT} entregas confirmadas por data e janela`}
       />
 
-      <div className="overflow-hidden rounded-lg border border-border bg-card">
+      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
         <Table>
           <TableHeader>
             <TableRow>

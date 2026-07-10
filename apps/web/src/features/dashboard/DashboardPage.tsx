@@ -44,7 +44,7 @@ export function DashboardPage() {
 
   return (
     <>
-      <PageHeader title="Monitoramento Operacional" />
+      <PageHeader eyebrow="Monitoramento" title="Monitoramento Operacional" />
       <StatusCounts orders={all.data} />
 
       <h2 className="mb-3 text-lg font-medium">Entregas agendadas — próximos {DAYS_AHEAD} dias</h2>
@@ -58,7 +58,7 @@ export function DashboardPage() {
         <>
           {/* Tabela em telas médias e maiores */}
           <div className="hidden md:block">
-            <div className="overflow-hidden rounded-lg border border-border bg-card">
+            <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -89,7 +89,7 @@ export function DashboardPage() {
           {/* Cards em telas pequenas */}
           <ul className="grid gap-3 md:hidden">
             {upcoming.map(({ order, schedule }) => (
-              <li key={order.id} className="rounded-lg border border-border bg-card p-4">
+              <li key={order.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
                 <div className="flex items-baseline justify-between">
                   <Link
                     to={`/sales-orders/${order.id}`}
