@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { ActiveBadge } from '@/components/StatusBadge';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { PageHeader } from '@/components/PageHeader';
@@ -185,33 +186,53 @@ export function TransportTypesPage() {
         <EmptyState title="Nenhum tipo de transporte" description="Cadastre o primeiro tipo de transporte." />
       )}
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Código</TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead>Situação</TableHead>
-                <TableHead className="text-right">Ação</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {query.data.map((t) => (
-                <TableRow key={t.id}>
-                  <TableCell className="tabular">{t.code}</TableCell>
-                  <TableCell>{t.name}</TableCell>
-                  <TableCell>{t.active ? 'Ativo' : 'Inativo'}</TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <EditDialog id={t.id} code={t.code} name={t.name} />
-                      <ToggleActive id={t.id} active={t.active} />
-                    </div>
-                  </TableCell>
+        <>
+          <div className="hidden overflow-hidden rounded-xl border border-border bg-card shadow-panel md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Código</TableHead>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Situação</TableHead>
+                  <TableHead className="text-center">Ações</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {query.data.map((t) => (
+                  <TableRow key={t.id}>
+                    <TableCell className="tabular">{t.code}</TableCell>
+                    <TableCell>{t.name}</TableCell>
+                    <TableCell><ActiveBadge active={t.active} /></TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <EditDialog id={t.id} code={t.code} name={t.name} />
+                        <ToggleActive id={t.id} active={t.active} />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          <ul className="grid gap-3 md:hidden">
+            {query.data.map((t) => (
+              <li key={t.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-medium">{t.name}</p>
+                    <p className="tabular text-sm text-muted-foreground">{t.code}</p>
+                  </div>
+                  <ActiveBadge active={t.active} />
+                </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <EditDialog id={t.id} code={t.code} name={t.name} />
+                  <ToggleActive id={t.id} active={t.active} />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </>
   );

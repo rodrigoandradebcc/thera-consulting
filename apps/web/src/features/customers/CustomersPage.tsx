@@ -4,6 +4,7 @@ import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { ActiveBadge } from '@/components/StatusBadge';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { PageHeader } from '@/components/PageHeader';
@@ -17,13 +18,17 @@ import { Label } from '@/components/ui/label';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
+import { isValidCpfCnpj, maskCpfCnpj } from '@/lib/br-document';
 import { toApiError } from '@/lib/errors';
 import { CustomerTransportTypes } from './CustomerTransportTypes';
 import { useCreateCustomer, useCustomersQuery, useUpdateCustomer } from './queries';
 
 const customerSchema = z.object({
   name: z.string().min(1, 'Informe o nome.'),
-  document: z.string().regex(/^\d{11,14}$/, 'CPF ou CNPJ: 11 a 14 dígitos.'),
+  document: z
+    .string()
+    .transform((value) => value.replace(/\D/g, ''))
+    .refine(isValidCpfCnpj, 'CPF ou CNPJ inválido.'),
   email: z.union([z.string().email('E-mail inválido.'), z.literal('')]),
 });
 type CustomerForm = z.infer<typeof customerSchema>;
@@ -73,7 +78,17 @@ function CreateCustomerDialog() {
           </div>
           <div>
             <Label htmlFor="document" className="mb-1.5">Documento</Label>
-            <Input id="document" inputMode="numeric" {...form.register('document')} />
+            <Input
+              id="document"
+              inputMode="numeric"
+              {...form.register('document', {
+                onChange: (event) => {
+                  form.setValue('document', maskCpfCnpj(event.target.value), {
+                    shouldValidate: form.formState.isSubmitted,
+                  });
+                },
+              })}
+            />
             {form.formState.errors.document && (
               <p role="alert" className="mt-1 text-sm text-destructive">{form.formState.errors.document.message}</p>
             )}
@@ -147,7 +162,7 @@ function EditCustomerDialog({
           </div>
           <div>
             <Label htmlFor="edit-customer-document" className="mb-1.5">Documento</Label>
-            <Input id="edit-customer-document" value={documentNumber} disabled readOnly />
+            <Input id="edit-customer-document" value={maskCpfCnpj(documentNumber)} disabled readOnly />
           </div>
           <div>
             <Label htmlFor="edit-customer-email" className="mb-1.5">E-mail (opcional)</Label>
@@ -225,66 +240,114 @@ export function CustomersPage() {
       )}
 
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-10" />
-                <TableHead>Nome</TableHead>
-                <TableHead>Documento</TableHead>
-                <TableHead>Situação</TableHead>
-                <TableHead className="text-right">Ação</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {query.data.map((customer) => {
-                const open = expanded === customer.id;
-                return (
-                  <Fragment key={customer.id}>
-                    <TableRow>
-                      <TableCell>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          aria-expanded={open}
-                          aria-label={`${open ? 'Ocultar' : 'Mostrar'} transportes de ${customer.name}`}
-                          onClick={() => setExpanded(open ? null : customer.id)}
-                        >
-                          {open ? (
-                            <ChevronDown aria-hidden="true" className="size-4" />
-                          ) : (
-                            <ChevronRight aria-hidden="true" className="size-4" />
-                          )}
-                        </Button>
-                      </TableCell>
-                      <TableCell>{customer.name}</TableCell>
-                      <TableCell className="tabular">{customer.document}</TableCell>
-                      <TableCell>{customer.active ? 'Ativo' : 'Inativo'}</TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <EditCustomerDialog
-                            id={customer.id}
-                            name={customer.name}
-                            email={customer.email}
-                            documentNumber={customer.document}
-                          />
-                          <DeactivateCustomer id={customer.id} active={customer.active} />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                    {open && (
-                      <TableRow>
-                        <TableCell colSpan={5}>
-                          <CustomerTransportTypes customerId={customer.id} />
+        <>
+          <div className="hidden overflow-hidden rounded-xl border border-border bg-card shadow-panel md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-10" />
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Documento</TableHead>
+                  <TableHead>Situação</TableHead>
+                  <TableHead className="text-center">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {query.data.map((customer) => {
+                  const open = expanded === customer.id;
+                  return (
+                    <Fragment key={customer.id}>
+                      <TableRow className={open ? 'bg-muted/50' : undefined}>
+                        <TableCell>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            aria-expanded={open}
+                            aria-label={`${open ? 'Ocultar' : 'Mostrar'} transportes de ${customer.name}`}
+                            onClick={() => setExpanded(open ? null : customer.id)}
+                          >
+                            {open ? (
+                              <ChevronDown aria-hidden="true" className="size-4" />
+                            ) : (
+                              <ChevronRight aria-hidden="true" className="size-4" />
+                            )}
+                          </Button>
+                        </TableCell>
+                        <TableCell>{customer.name}</TableCell>
+                        <TableCell className="tabular">{maskCpfCnpj(customer.document)}</TableCell>
+                        <TableCell><ActiveBadge active={customer.active} /></TableCell>
+                        <TableCell className="text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <EditCustomerDialog
+                              id={customer.id}
+                              name={customer.name}
+                              email={customer.email}
+                              documentNumber={customer.document}
+                            />
+                            <DeactivateCustomer id={customer.id} active={customer.active} />
+                          </div>
                         </TableCell>
                       </TableRow>
-                    )}
-                  </Fragment>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
+                      {open && (
+                        <TableRow>
+                          <TableCell colSpan={5}>
+                            <CustomerTransportTypes customerId={customer.id} />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+
+          <ul className="grid gap-3 md:hidden">
+            {query.data.map((customer) => {
+              const open = expanded === customer.id;
+              return (
+                <li key={customer.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <p className="font-medium">{customer.name}</p>
+                      <p className="tabular text-sm text-muted-foreground">{maskCpfCnpj(customer.document)}</p>
+                    </div>
+                    <ActiveBadge active={customer.active} />
+                  </div>
+                  <div className="mt-3 flex items-center gap-2">
+                    <EditCustomerDialog
+                      id={customer.id}
+                      name={customer.name}
+                      email={customer.email}
+                      documentNumber={customer.document}
+                    />
+                    <DeactivateCustomer id={customer.id} active={customer.active} />
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="ml-auto"
+                      aria-expanded={open}
+                      aria-label={`${open ? 'Ocultar' : 'Mostrar'} transportes de ${customer.name}`}
+                      onClick={() => setExpanded(open ? null : customer.id)}
+                    >
+                      {open ? (
+                        <ChevronDown aria-hidden="true" className="size-4" />
+                      ) : (
+                        <ChevronRight aria-hidden="true" className="size-4" />
+                      )}
+                      Transportes
+                    </Button>
+                  </div>
+                  {open && (
+                    <div className="mt-3 border-t border-border pt-3">
+                      <CustomerTransportTypes customerId={customer.id} />
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
     </>
   );

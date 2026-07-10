@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { describe, expect, it, vi } from 'vitest';
@@ -32,14 +32,26 @@ describe('CustomersPage', () => {
 
     await user.click(await screen.findByRole('button', { name: /novo cliente/i }));
     await user.type(screen.getByLabelText('Nome'), 'ACME');
-    await user.type(screen.getByLabelText('Documento'), '12345678901');
+    await user.type(screen.getByLabelText('Documento'), '11144477735');
     // E-mail deixado em branco de propósito.
     await user.click(screen.getByRole('button', { name: /^criar$/i }));
 
     await waitFor(() => expect(captured).toHaveBeenCalled());
     const body = captured.mock.calls[0][0] as Record<string, unknown>;
     expect(body).not.toHaveProperty('email');
-    expect(body).toEqual({ name: 'ACME', document: '12345678901' });
+    expect(body).toEqual({ name: 'ACME', document: '11144477735' });
+  });
+
+  it('ignora letras e aplica a máscara de CPF no campo Documento', async () => {
+    server.use(http.get(`${BASE}/customers`, () => HttpResponse.json([])));
+    renderPage();
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole('button', { name: /novo cliente/i }));
+    const documentInput = screen.getByLabelText('Documento');
+    await user.type(documentInput, 'a648b778c010d30');
+
+    expect(documentInput).toHaveValue('648.778.010-30');
   });
 
   const CUSTOMER_ID = '55555555-5555-4555-8555-555555555555';
@@ -62,12 +74,12 @@ describe('CustomersPage', () => {
     renderPage();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: 'Editar cliente ACME' }));
+    await user.click(within(await screen.findByRole('table')).getByRole('button', { name: 'Editar cliente ACME' }));
 
     expect(await screen.findByLabelText('Nome')).toHaveValue('ACME');
     expect(screen.getByLabelText('E-mail (opcional)')).toHaveValue('contato@acme.com');
     const documentInput = screen.getByLabelText('Documento');
-    expect(documentInput).toHaveValue('12345678901');
+    expect(documentInput).toHaveValue('123.456.789-01');
     expect(documentInput).toBeDisabled();
   });
 
@@ -101,7 +113,7 @@ describe('CustomersPage', () => {
     renderPage();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: 'Editar cliente ACME' }));
+    await user.click(within(await screen.findByRole('table')).getByRole('button', { name: 'Editar cliente ACME' }));
     const nameInput = await screen.findByLabelText('Nome');
     await user.clear(nameInput);
     await user.type(nameInput, 'ACME Ltda');

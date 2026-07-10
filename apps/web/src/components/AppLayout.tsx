@@ -81,7 +81,7 @@ export function AppLayout() {
           <ActorField />
           <ThemeToggle />
         </header>
-        <main id="conteudo" className="flex-1 p-6 lg:p-8">
+        <main id="conteudo" className="flex-1 p-6 pb-24 lg:p-8">
           <Outlet />
         </main>
       </div>

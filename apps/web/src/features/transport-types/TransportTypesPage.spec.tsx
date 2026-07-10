@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { describe, expect, it, vi } from 'vitest';
@@ -33,7 +33,7 @@ describe('TransportTypesPage', () => {
     renderPage();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: 'Desativar' }));
+    await user.click(within(await screen.findByRole('table')).getByRole('button', { name: 'Desativar' }));
     expect(await screen.findByText(/baixa lógica/i)).toBeInTheDocument();
     // O diálogo tem dois botões de rótulo "Desativar" (o trigger e a confirmação);
     // o de confirmação é identificado pelo variant destrutivo.
@@ -60,7 +60,7 @@ describe('TransportTypesPage', () => {
     renderPage();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: 'Desativar' }));
+    await user.click(within(await screen.findByRole('table')).getByRole('button', { name: 'Desativar' }));
     const destructiveButton = screen
       .getAllByRole('button')
       .find((btn) => btn.textContent === 'Desativar' && btn.getAttribute('data-variant') === 'destructive');
@@ -100,7 +100,9 @@ describe('TransportTypesPage', () => {
     renderPage();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: 'Editar tipo de transporte Caminhão' }));
+    await user.click(
+      within(await screen.findByRole('table')).getByRole('button', { name: 'Editar tipo de transporte Caminhão' }),
+    );
 
     expect(await screen.findByLabelText('Nome')).toHaveValue('Caminhão');
     const codeInput = screen.getByLabelText('Código');
@@ -122,7 +124,9 @@ describe('TransportTypesPage', () => {
     renderPage();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: 'Editar tipo de transporte Caminhão' }));
+    await user.click(
+      within(await screen.findByRole('table')).getByRole('button', { name: 'Editar tipo de transporte Caminhão' }),
+    );
     const nameInput = await screen.findByLabelText('Nome');
     await user.clear(nameInput);
     await user.type(nameInput, 'Caminhão Grande');

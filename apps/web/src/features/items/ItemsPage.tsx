@@ -115,26 +115,40 @@ export function ItemsPage() {
         <EmptyState title="Nenhum item" description="Cadastre o primeiro item do catálogo." />
       )}
       {query.isSuccess && query.data.length > 0 && (
-        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>SKU</TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead className="text-right">Preço unitário</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {query.data.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="tabular">{item.sku}</TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell className="tabular text-right">{money(item.unitPrice)}</TableCell>
+        <>
+          <div className="hidden overflow-hidden rounded-xl border border-border bg-card shadow-panel md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>SKU</TableHead>
+                  <TableHead>Nome</TableHead>
+                  <TableHead className="text-right">Preço unitário</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {query.data.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="tabular">{item.sku}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell className="tabular text-right">{money(item.unitPrice)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          <ul className="grid gap-3 md:hidden">
+            {query.data.map((item) => (
+              <li key={item.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="font-medium">{item.name}</span>
+                  <span className="tabular text-right">{money(item.unitPrice)}</span>
+                </div>
+                <p className="tabular mt-1 text-sm text-muted-foreground">{item.sku}</p>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </>
   );

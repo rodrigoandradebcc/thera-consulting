@@ -187,10 +187,10 @@ describe('AuditTimeline', () => {
     // Ordem = união das chaves de before seguidas pelas exclusivas de after.
     expect(labels).toEqual(['Data de entrega:', 'Janela:', 'observacao:', 'Status:']);
 
-    expect(scope.getByText('2026-07-01')).toBeInTheDocument();
-    expect(scope.getByText('2026-07-10')).toBeInTheDocument();
-    expect(scope.getByText('MANHA')).toBeInTheDocument();
-    expect(scope.getByText('TARDE')).toBeInTheDocument();
+    expect(scope.getByText('01/07/2026')).toBeInTheDocument();
+    expect(scope.getByText('10/07/2026')).toBeInTheDocument();
+    expect(scope.getByText('Manhã (08:00–12:00)')).toBeInTheDocument();
+    expect(scope.getByText('Tarde (13:00–18:00)')).toBeInTheDocument();
     expect(scope.getByText('Cliente ausente')).toBeInTheDocument();
     expect(scope.getByText('Cliente avisado')).toBeInTheDocument();
 

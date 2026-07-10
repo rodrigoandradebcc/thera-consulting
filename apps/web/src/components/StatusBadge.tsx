@@ -1,6 +1,7 @@
 import {
   CalendarCheck,
   CheckCircle2,
+  CircleSlash,
   ClipboardCheck,
   Clock,
   FileText,
@@ -58,6 +59,29 @@ export function StatusBadge({ status }: { status: SalesOrderStatus }) {
     <span className={cn(base, className)}>
       <Icon aria-hidden="true" className="size-3.5" />
       {status.replace('_', ' ')}
+    </span>
+  );
+}
+
+export function ActiveBadge({ active }: { active: boolean }) {
+  const config = active
+    ? {
+        icon: CheckCircle2,
+        label: 'Ativo',
+        className:
+          'bg-emerald-100 text-emerald-900 ring-emerald-300 dark:bg-emerald-950 dark:text-emerald-200 dark:ring-emerald-800',
+      }
+    : {
+        icon: CircleSlash,
+        label: 'Inativo',
+        className:
+          'bg-slate-100 text-slate-600 ring-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:ring-slate-700',
+      };
+  const Icon = config.icon;
+  return (
+    <span className={cn(base, config.className)}>
+      <Icon aria-hidden="true" className="size-3.5" />
+      {config.label}
     </span>
   );
 }

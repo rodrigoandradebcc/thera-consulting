@@ -11,10 +11,12 @@ import {
 } from '@/components/ui/select';
 import { SALES_ORDER_STATUSES } from '@/domain/status-machine';
 import { useCustomersQuery } from '@/features/customers/queries';
+import { WINDOW_LABEL } from '@/features/scheduling/scheduleSchema';
 import { useTransportTypesQuery } from '@/features/transport-types/queries';
 import { useSalesOrderFilters } from './useSalesOrderFilters';
 
 const ALL = '__all__';
+const WINDOWS = ['MANHA', 'TARDE', 'INTEGRAL'] as const;
 
 export function SalesOrderFilters() {
   const { filters, setFilter, clear } = useSalesOrderFilters();
@@ -22,7 +24,7 @@ export function SalesOrderFilters() {
   const transportTypes = useTransportTypesQuery();
 
   return (
-    <section aria-label="Filtros" className="mb-4 grid gap-3 rounded-lg border border-border bg-card p-4 md:grid-cols-3 lg:grid-cols-6">
+    <section aria-label="Filtros" className="mb-4 grid gap-3 rounded-lg border border-border bg-card p-4 md:grid-cols-3 lg:grid-cols-7">
       <div>
         <Label htmlFor="f-status" className="mb-1.5">Status</Label>
         <Select
@@ -66,6 +68,22 @@ export function SalesOrderFilters() {
             <SelectItem value={ALL}>Todos</SelectItem>
             {(transportTypes.data ?? []).map((t) => (
               <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <Label htmlFor="f-window" className="mb-1.5">Janela</Label>
+        <Select
+          value={filters.window ?? ALL}
+          onValueChange={(v) => setFilter('window', v === ALL ? undefined : v)}
+        >
+          <SelectTrigger id="f-window"><SelectValue placeholder="Todas" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>Todas</SelectItem>
+            {WINDOWS.map((w) => (
+              <SelectItem key={w} value={w}>{WINDOW_LABEL[w]}</SelectItem>
             ))}
           </SelectContent>
         </Select>

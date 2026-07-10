@@ -62,6 +62,11 @@ export function SchedulingPage() {
 
   const counts = countConfirmedBySlot(query.data);
 
+  const rows = scheduled.map(({ order, schedule }) => {
+    const used = counts.get(slotKey(schedule.scheduledDate, schedule.window)) ?? 0;
+    return { order, schedule, used, full: isCountFull(used) };
+  });
+
   if (scheduled.length === 0) {
     return (
       <>
@@ -82,7 +87,7 @@ export function SchedulingPage() {
         description={`Capacidade de ${MAX_DELIVERIES_PER_SLOT} entregas confirmadas por data e janela`}
       />
 
-      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
+      <div className="hidden overflow-hidden rounded-xl border border-border bg-card shadow-panel md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -95,33 +100,51 @@ export function SchedulingPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {scheduled.map(({ order, schedule }) => {
-              const key = slotKey(schedule.scheduledDate, schedule.window);
-              const used = counts.get(key) ?? 0;
-              const full = isCountFull(used);
-
-              return (
-                <TableRow key={order.id}>
-                  <TableCell className="tabular">{order.number}</TableCell>
-                  <TableCell className="tabular">{dateBR(schedule.scheduledDate)}</TableCell>
-                  <TableCell>{WINDOW_LABEL[schedule.window]}</TableCell>
-                  <TableCell className="tabular">{`${used}/${MAX_DELIVERIES_PER_SLOT}`}</TableCell>
-                  <TableCell>
-                    <ScheduleStatusBadge status={schedule.status} />
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {schedule.status === 'PENDENTE' ? (
-                      <ConfirmButton salesOrderId={order.id} full={full} />
-                    ) : (
-                      <span className="text-sm text-muted-foreground">—</span>
-                    )}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {rows.map(({ order, schedule, used, full }) => (
+              <TableRow key={order.id}>
+                <TableCell className="tabular">{order.number}</TableCell>
+                <TableCell className="tabular">{dateBR(schedule.scheduledDate)}</TableCell>
+                <TableCell>{WINDOW_LABEL[schedule.window]}</TableCell>
+                <TableCell className="tabular">{`${used}/${MAX_DELIVERIES_PER_SLOT}`}</TableCell>
+                <TableCell>
+                  <ScheduleStatusBadge status={schedule.status} />
+                </TableCell>
+                <TableCell className="text-right">
+                  {schedule.status === 'PENDENTE' ? (
+                    <ConfirmButton salesOrderId={order.id} full={full} />
+                  ) : (
+                    <span className="text-sm text-muted-foreground">—</span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>
+
+      <ul className="grid gap-3 md:hidden">
+        {rows.map(({ order, schedule, used, full }) => (
+          <li key={order.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
+            <div className="flex items-start justify-between gap-2">
+              <span className="tabular font-medium">{order.number}</span>
+              <ScheduleStatusBadge status={schedule.status} />
+            </div>
+            <dl className="mt-2 grid grid-cols-2 gap-1 text-sm">
+              <dt className="text-muted-foreground">Data</dt>
+              <dd className="tabular text-right">{dateBR(schedule.scheduledDate)}</dd>
+              <dt className="text-muted-foreground">Janela</dt>
+              <dd className="text-right">{WINDOW_LABEL[schedule.window]}</dd>
+              <dt className="text-muted-foreground">Ocupação</dt>
+              <dd className="tabular text-right">{`${used}/${MAX_DELIVERIES_PER_SLOT}`}</dd>
+            </dl>
+            {schedule.status === 'PENDENTE' && (
+              <div className="mt-3 flex justify-end">
+                <ConfirmButton salesOrderId={order.id} full={full} />
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
