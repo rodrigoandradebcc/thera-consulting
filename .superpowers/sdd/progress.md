@@ -24,7 +24,7 @@ Merge base: `b4b8fc7`
 - [x] Task 10: complete (commits cc96a1f..4224634, review clean). 65 testes. Componente estava certo; os testes do plano é que não provavam nada — assertiva vazia (`de — para` nunca é renderizado), não-reordenação e união de chaves sem cobertura. Corrigido com 3 experimentos de regressão.
 - [x] Task 11: complete (commits 9de1870..5b12b1c, review clean). 78 testes. Bug real: `CustomerTransportTypes` mostrava "nenhum transporte autorizado" durante loading e permanentemente em erro 500 — usuário não distinguia "não tem" de "quebrou". +11 testes cobrindo idempotência do vínculo, dialog de baixa, imutabilidade do `code`, omissão de email vazio.
 - [x] Task 12: complete (commits 117dd73..97c19a3, review clean). 82 testes. Plano tinha 3 armadilhas: `schedule!`, `isoDate` em UTC (mesmo bug de fuso da task 9), e `countByStatus as Record`. Todas corrigidas. Teste de zero-count adicionado com regressão provada.
-- [ ] Task 13: A11y, responsividade, README
+- [x] Task 13: complete (commit 763c4e4). 82 testes. Tabelas viram cards em mobile (lista de OVs + dashboard). READMEs do front e da raiz. Verificação estática de a11y (aria-hidden, role=alert, skip-link, reduced-motion, zero emoji/parseFloat/assertion) passou. PENDENTE MANUAL: audit em navegador vivo (teclado, reduced-motion visual, Lighthouse) — extensão do Chrome não conectada, não executado.
 
 ## Findings Minor (para o review final triar)
 
