@@ -56,7 +56,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
   return (
     <div className="max-w-xl space-y-6 rounded-xl border border-border bg-card p-6 shadow-panel">
       {existing !== null && (
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <ScheduleStatusBadge status={existing.status} />
           <span className="tabular text-sm">{dateBR(existing.scheduledDate)}</span>
           <span className="text-sm text-muted-foreground">{WINDOW_LABEL[existing.window]}</span>
@@ -88,7 +88,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
           </select>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <Button type="submit" disabled={pending}>
             {existing === null ? 'Agendar entrega' : 'Reagendar'}
           </Button>
