@@ -51,6 +51,23 @@ describe('Catálogo (e2e)', () => {
     await request(app.getHttpServer()).post('/api/transport-types').send(payload).expect(409);
   });
 
+  it('consulta um tipo de transporte por id e retorna 404 se inexistente', async () => {
+    const created = await request(app.getHttpServer())
+      .post('/api/transport-types')
+      .send({ code: 'VAN', name: 'Van' })
+      .expect(201);
+
+    const found = await request(app.getHttpServer())
+      .get(`/api/transport-types/${created.body.id}`)
+      .expect(200);
+    expect(found.body.code).toBe('VAN');
+    expect(found.body.name).toBe('Van');
+
+    await request(app.getHttpServer())
+      .get('/api/transport-types/6f0f0b3e-0000-4000-8000-000000000000')
+      .expect(404);
+  });
+
   it('cria, lista e consulta um item preservando a precisão decimal', async () => {
     const created = await request(app.getHttpServer())
       .post('/api/items')

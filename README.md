@@ -310,7 +310,7 @@ Não há autenticação no escopo do desafio. O `actor` é lido do header opcion
 
 ## Testes
 
-O enunciado exige no mínimo 2 unitários e 1 de integração. A suíte tem **47 unitários e 35 de integração**, porque a regra central do desafio é uma máquina de estados — e máquina de estados se testa por exaustão.
+O enunciado exige no mínimo 2 unitários e 1 de integração. A suíte tem **47 unitários e 37 de integração**, porque a regra central do desafio é uma máquina de estados — e máquina de estados se testa por exaustão.
 
 **Unitários** (sem banco): matriz completa 5×5 da máquina de estados (as 25 combinações: 4 válidas, 21 rejeitadas), pré-condição de `AGENDADA`, regras de agendamento, cálculo de total com `Decimal`, e o filtro global de exceções.
 
@@ -357,7 +357,7 @@ Diferenciais não perseguidos: Event-Driven, cache, métricas, CI/CD. O enunciad
 | 3 | Troca de transporte bloqueada a partir de `EM_TRANSPORTE` | livre até `ENTREGUE` | carga na estrada não troca de transportadora |
 | 4 | `actor` vem do header `X-Actor` | `null` sempre; ou implementar auth | mantém a coluna útil sem inventar auth fora de escopo |
 | 5 | `POST /customers/:id/transport-types` é aditivo e idempotente | substituir a lista inteira | `POST` adiciona; substituição seria `PUT` |
-| 6 | Sem `GET /transport-types/:id`, sem `PATCH /items/:id` | criar por simetria | o enunciado lista Itens como "Criar; Consultar" apenas |
+| 6 | Sem `PATCH /items/:id` | criar por simetria | o enunciado lista Itens como "Criar; Consultar" apenas |
 | 7 | "≥1 item" garantido no service dentro de transação | constraint deferida ou trigger | invariante de agregado pertence ao domínio, não ao DDL |
 | 8 | Reagendar mantém `CONFIRMADO` | rebaixar para `PENDENTE` | rebaixar quebraria o invariante de `AGENDADA` |
 | 9 | Repositório fino, sem interface abstrata | Clean Architecture com ports/adapters | a indireção só se paga com mais de um adapter; aqui haveria um |
