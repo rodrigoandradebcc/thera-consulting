@@ -12,8 +12,8 @@ Merge base: `b4b8fc7`
 
 ## Tasks
 
-- [ ] Task 1: CORS + GET /customers/:id/transport-types
-- [ ] Task 2: Scaffold apps/web
+- [x] Task 1: complete (commits 5304797..34578ce, review clean). Fix aplicado: ConfigService no lugar de process.env, após achado Important do revisor. API: 47 unit + 37 e2e.
+- [x] Task 2: complete (commit 2df32b2, review clean). 5 desvios adjudicados como justificados: vitest/config, baseUrl removido (TS 6.0.3 deprecia), paths no tsconfig raiz (shadcn CLI), strict explícito, scripts de teste.
 - [ ] Task 3: Fundações (format, errors, client, status-machine)
 - [ ] Task 4: Camada de API + query keys
 - [ ] Task 5: Layout, rotas, componentes de estado
@@ -28,4 +28,4 @@ Merge base: `b4b8fc7`
 
 ## Findings Minor (para o review final triar)
 
-(nenhum ainda)
+- Task 2: `apps/web/tsconfig.node.json` não tem `"strict": true`, ao contrário de `tsconfig.app.json`. Hoje só cobre `vite.config.ts`. Se crescer (setup do MSW, plugins), type-check fica mais frouxo que o resto.
