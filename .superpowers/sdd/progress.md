@@ -21,7 +21,7 @@ Merge base: `b4b8fc7`
 - [x] Task 7: complete (commits d54d89d..0496760, review clean). 41 testes. Fix de 4 achados: erros por linha de item agora renderizam; transportTypeId reseta ao trocar cliente; gate de loading revertido (a corrida era do teste); estimateTotalCents trunca >2 decimais.
 - [x] Task 8: complete (commit aec1b1c, review clean, zero achados). 49 testes. `as NonNullable` do plano substituído por re-narrowing real (`const nextStatus = next` antes da closure).
 - [x] Task 9: complete (commits 913db9b..a054d29, review clean). 58 testes. Bug real corrigido: `today()` usava UTC e rejeitava agendar pra hoje entre 21h e 23h59 BRT. Teste de slot agora varia a janela. `isCountFull` centraliza o limite. 3 type assertions do plano eliminadas.
-- [ ] Task 10: Auditoria
+- [x] Task 10: complete (commits cc96a1f..4224634, review clean). 65 testes. Componente estava certo; os testes do plano é que não provavam nada — assertiva vazia (`de — para` nunca é renderizado), não-reordenação e união de chaves sem cobertura. Corrigido com 3 experimentos de regressão.
 - [ ] Task 11: Cadastros
 - [ ] Task 12: Dashboard
 - [ ] Task 13: A11y, responsividade, README
