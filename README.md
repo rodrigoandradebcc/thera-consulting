@@ -23,14 +23,27 @@ pnpm api:dev         # API em http://localhost:3000/api
 Swagger: **http://localhost:3000/docs**
 Health check: `GET http://localhost:3000/api/health`
 
+### Executando tudo
+
+Com o frontend (`apps/web`, ver `apps/web/README.md`) incluído, o fluxo completo do zero é:
+
+```bash
+pnpm install
+pnpm db:up && pnpm db:migrate && pnpm db:seed
+pnpm dev          # API em :3000, front em :5173
+```
+
+`pnpm dev` sobe API e front em paralelo (`api:dev` + `web:dev`). Para rodar só um dos dois: `pnpm api:dev` ou `pnpm web:dev`.
+
 ### Testes
 
 ```bash
-pnpm test            # 47 unitários
-pnpm test:e2e        # 35 de integração (exige o Postgres no ar)
+pnpm test                       # API: 47 unitários
+pnpm test:e2e                   # API: 37 de integração (exige o Postgres no ar)
+pnpm --filter @ovgs/web test    # web: 82 (Vitest + Testing Library)
 ```
 
-Os testes e2e rodam contra um Postgres real, no schema `test` (`.env.test`), isolado do banco de desenvolvimento. O comando `test:e2e` aplica as migrations nesse schema antes de rodar. Cada caso começa com as tabelas truncadas.
+Os testes e2e da API rodam contra um Postgres real, no schema `test` (`.env.test`), isolado do banco de desenvolvimento. O comando `test:e2e` aplica as migrations nesse schema antes de rodar. Cada caso começa com as tabelas truncadas. Os testes do front usam MSW para simular a API — não exigem Postgres nem a API no ar.
 
 ### Scripts
 
@@ -40,10 +53,11 @@ Os testes e2e rodam contra um Postgres real, no schema `test` (`.env.test`), iso
 | `pnpm db:migrate` | `prisma migrate dev` |
 | `pnpm db:seed` | popula dados de exemplo |
 | `pnpm db:reset` | dropa o banco, reaplica as migrations e roda o seed |
-| `pnpm api:dev` | API em modo watch |
-| `pnpm api:build` | compila a API |
+| `pnpm api:dev` / `pnpm web:dev` | API / front em modo watch |
+| `pnpm dev` | API + front em paralelo |
+| `pnpm api:build` / `pnpm web:build` | compila a API / o front |
 
-Dentro de `apps/api` os scripts do NestJS estão todos disponíveis (`start:prod`, `lint`, `format`, `test:cov`).
+Dentro de `apps/api` os scripts do NestJS estão todos disponíveis (`start:prod`, `lint`, `format`, `test:cov`). Dentro de `apps/web`, ver `apps/web/README.md`.
 
 ---
 
@@ -75,7 +89,7 @@ docker-compose.yml     Postgres, compartilhado
 docs/                  spec de design e plano de implementação
 apps/
   api/                 backend NestJS (este documento)
-  web/                 frontend (em desenvolvimento)
+  web/                 frontend React (SPA) — ver apps/web/README.md
 ```
 
 Dentro da API, os módulos são organizados **por domínio**, não por camada técnica:

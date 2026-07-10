@@ -52,4 +52,9 @@ export class CustomersService {
     }
     return this.repository.listTransportTypeIds(id);
   }
+
+  async listTransportTypes(id: string): Promise<string[]> {
+    await this.findByIdOrThrow(id);
+    return this.repository.listTransportTypeIds(id);
+  }
 }

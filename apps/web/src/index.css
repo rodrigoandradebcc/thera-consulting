@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Habilita o variant `dark:` por classe (estratégia .dark no <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #1e40af;
+  --primary-foreground: #ffffff;
+  --secondary: #3b82f6;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #d97706;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1e40af;
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #e2e8f0;
+  --card: #111a2e;
+  --card-foreground: #e2e8f0;
+  --popover: #111a2e;
+  --popover-foreground: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-foreground: #0b1220;
+  --secondary: #60a5fa;
+  --secondary-foreground: #0b1220;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #f59e0b;
+  --accent-foreground: #0b1220;
+  --destructive: #f87171;
+  --destructive-foreground: #0b1220;
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #3b82f6;
+}
+
+@theme inline {
+  --font-sans: 'Fira Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  /* Alias: componentes existentes usam `text-on-primary`. Manter funcionando. */
+  --color-on-primary: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  /* Dígitos de largura fixa: sem isso a coluna de dinheiro dança a cada re-render. */
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

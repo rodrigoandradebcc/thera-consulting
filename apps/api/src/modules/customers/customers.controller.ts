@@ -58,4 +58,13 @@ export class CustomersController {
     const transportTypeIds = await this.service.linkTransportTypes(id, dto.transportTypeIds);
     return { transportTypeIds };
   }
+
+  @Get(':id/transport-types')
+  @ApiOperation({ summary: 'Lista os tipos de transporte autorizados para o cliente' })
+  async listTransportTypes(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<{ transportTypeIds: string[] }> {
+    const transportTypeIds = await this.service.listTransportTypes(id);
+    return { transportTypeIds };
+  }
 }
