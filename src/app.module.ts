@@ -5,6 +5,8 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { HealthController } from './health.controller';
 import { AuditModule } from './modules/audit/audit.module';
 import { CustomersModule } from './modules/customers/customers.module';
+import { ItemsModule } from './modules/items/items.module';
+import { TransportTypesModule } from './modules/transport-types/transport-types.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { CustomersModule } from './modules/customers/customers.module';
     PrismaModule,
     AuditModule,
     CustomersModule,
+    TransportTypesModule,
+    ItemsModule,
   ],
   controllers: [HealthController],
 })
