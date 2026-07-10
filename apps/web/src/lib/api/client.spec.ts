@@ -22,7 +22,7 @@ describe('api client', () => {
     api.defaults.adapter = originalAdapter;
   });
 
-  it('envia X-Actor: web quando localStorage está vazio', async () => {
+  it('envia X-Actor: Operador quando localStorage está vazio', async () => {
     let captured: InternalAxiosRequestConfig | undefined;
     api.defaults.adapter = async (config) => {
       captured = config;
@@ -31,7 +31,7 @@ describe('api client', () => {
 
     await api.get('/qualquer');
 
-    expect(captured?.headers.get('X-Actor')).toBe('web');
+    expect(captured?.headers.get('X-Actor')).toBe('Operador');
   });
 
   it('envia X-Actor com o valor definido por setActor', async () => {

@@ -23,6 +23,16 @@ pnpm api:dev         # API em http://localhost:3000/api
 Swagger: **http://localhost:3000/docs**
 Health check: `GET http://localhost:3000/api/health`
 
+### Tudo em containers (API + Postgres)
+
+Para subir a API já containerizada junto do banco, sem instalar nada além do Docker:
+
+```bash
+docker compose --profile full up --build   # Postgres + API (aplica migrations na subida)
+```
+
+A API sobe em **http://localhost:3000/api** e aplica as migrations pendentes automaticamente (`prisma migrate deploy`). Sem o `--profile full`, `docker compose up` sobe só o Postgres (fluxo de dev com `pnpm api:dev`). O seed é opcional: `docker compose exec api pnpm exec tsx prisma/seed.ts`.
+
 ### Executando tudo
 
 Com o frontend (`apps/web`, ver `apps/web/README.md`) incluído, o fluxo completo do zero é:
@@ -40,7 +50,7 @@ pnpm dev          # API em :3000, front em :5173
 ```bash
 pnpm test                       # API: 47 unitários
 pnpm test:e2e                   # API: 38 de integração (exige o Postgres no ar)
-pnpm --filter @ovgs/web test    # web: 82 (Vitest + Testing Library)
+pnpm --filter @ovgs/web test    # web: 115 (Vitest + Testing Library)
 ```
 
 Os testes e2e da API rodam contra um Postgres real, no schema `test` (`.env.test`), isolado do banco de desenvolvimento. O comando `test:e2e` aplica as migrations nesse schema antes de rodar. Cada caso começa com as tabelas truncadas. Os testes do front usam MSW para simular a API — não exigem Postgres nem a API no ar.

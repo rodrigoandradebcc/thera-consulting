@@ -6,8 +6,8 @@ describe('actor', () => {
     localStorage.clear();
   });
 
-  it('retorna "web" como padrão quando nenhum ator foi definido', () => {
-    expect(getActor()).toBe('web');
+  it('retorna "Operador" como padrão quando nenhum ator foi definido', () => {
+    expect(getActor()).toBe('Operador');
   });
 
   it('retoma o valor definido por setActor', () => {
@@ -20,13 +20,13 @@ describe('actor', () => {
     setActor('rodrigo');
     setActor('');
 
-    expect(getActor()).toBe('web');
+    expect(getActor()).toBe('Operador');
   });
 
   it('setActor com apenas espaços limpa o valor armazenado e volta ao padrão', () => {
     setActor('rodrigo');
     setActor('   ');
 
-    expect(getActor()).toBe('web');
+    expect(getActor()).toBe('Operador');
   });
 });
