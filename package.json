@@ -11,6 +11,10 @@
     "db:reset": "pnpm --filter @ovgs/api db:reset",
     "api:dev": "pnpm --filter @ovgs/api start:dev",
     "api:build": "pnpm --filter @ovgs/api build",
+    "web:dev": "pnpm --filter @ovgs/web dev",
+    "web:build": "pnpm --filter @ovgs/web build",
+    "web:test": "pnpm --filter @ovgs/web test",
+    "dev": "pnpm run --parallel \"/^(api|web):dev$/\"",
     "test": "pnpm --filter @ovgs/api test",
     "test:e2e": "pnpm --filter @ovgs/api test:e2e"
   }
