@@ -6,8 +6,10 @@ export class AuditLogResponse {
   @ApiProperty({ example: 'STATUS_CHANGED' }) action!: string;
   @ApiProperty({ example: 'SALES_ORDER' }) entity!: string;
   @ApiProperty() entityId!: string;
-  @ApiPropertyOptional({ type: Object, nullable: true }) before!: Prisma.JsonValue | null;
-  @ApiPropertyOptional({ type: Object, nullable: true }) after!: Prisma.JsonValue | null;
+  @ApiPropertyOptional({ type: Object, nullable: true })
+  before!: Prisma.JsonValue | null;
+  @ApiPropertyOptional({ type: Object, nullable: true })
+  after!: Prisma.JsonValue | null;
   @ApiPropertyOptional({ nullable: true }) actor!: string | null;
   @ApiProperty({ description: 'Data e hora do evento.' }) createdAt!: Date;
 

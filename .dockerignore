@@ -1,0 +1,15 @@
+**/node_modules
+**/dist
+**/coverage
+**/build
+apps/api/generated
+apps/web/dist
+.git
+.github
+**/.env
+**/.env.*
+**/*.log
+.DS_Store
+docs
+.superpowers
+.claude
