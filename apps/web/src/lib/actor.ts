@@ -1,7 +1,7 @@
 const KEY = 'ovgs.actor';
 
 export function getActor(): string {
-  return localStorage.getItem(KEY) ?? 'web';
+  return localStorage.getItem(KEY) ?? 'Operador';
 }
 
 export function setActor(name: string): void {
