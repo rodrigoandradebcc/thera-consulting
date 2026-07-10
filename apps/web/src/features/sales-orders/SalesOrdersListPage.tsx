@@ -1,3 +1,91 @@
+import { Plus } from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
+import { PageHeader } from '@/components/PageHeader';
+import { StatusBadge } from '@/components/StatusBadge';
+import { EmptyState } from '@/components/EmptyState';
+import { ErrorState } from '@/components/ErrorState';
+import { TableSkeleton } from '@/components/TableSkeleton';
+import { Button } from '@/components/ui/button';
+import {
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+} from '@/components/ui/table';
+import { dateBR, money } from '@/lib/format';
+import { SalesOrderFilters } from './SalesOrderFilters';
+import { useSalesOrdersQuery } from './queries';
+import { useSalesOrderFilters } from './useSalesOrderFilters';
+
 export function SalesOrdersListPage() {
-  return <p>Em construção</p>;
+  const { filters } = useSalesOrderFilters();
+  const query = useSalesOrdersQuery(filters);
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <PageHeader
+        title="Ordens de Venda"
+        description="Monitoramento operacional"
+        actions={
+          <Button asChild>
+            <Link to="/sales-orders/new">
+              <Plus aria-hidden="true" className="size-4" /> Nova OV
+            </Link>
+          </Button>
+        }
+      />
+
+      <SalesOrderFilters />
+
+      {query.isPending && <TableSkeleton />}
+      {query.isError && <ErrorState error={query.error} onRetry={() => void query.refetch()} />}
+
+      {query.isSuccess && query.data.length === 0 && (
+        <EmptyState
+          title="Nenhuma ordem de venda"
+          description="Ajuste os filtros ou crie a primeira OV."
+          action={
+            <Button asChild>
+              <Link to="/sales-orders/new">Criar OV</Link>
+            </Button>
+          }
+        />
+      )}
+
+      {query.isSuccess && query.data.length > 0 && (
+        <div className="overflow-hidden rounded-lg border border-border bg-white">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Número</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Total</TableHead>
+                <TableHead>Entrega</TableHead>
+                <TableHead>Itens</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {query.data.map((order) => (
+                <TableRow
+                  key={order.id}
+                  tabIndex={0}
+                  className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring"
+                  onClick={() => void navigate(`/sales-orders/${order.id}`)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') void navigate(`/sales-orders/${order.id}`);
+                  }}
+                >
+                  <TableCell className="tabular">{order.number}</TableCell>
+                  <TableCell><StatusBadge status={order.status} /></TableCell>
+                  <TableCell className="tabular text-right">{money(order.total)}</TableCell>
+                  <TableCell className="tabular">
+                    {order.schedule === null ? '—' : dateBR(order.schedule.scheduledDate)}
+                  </TableCell>
+                  <TableCell>{order.items.length}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
+    </>
+  );
 }
