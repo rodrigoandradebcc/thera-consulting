@@ -53,7 +53,6 @@ export function SalesOrdersListPage() {
 
       {query.isSuccess && query.data.length > 0 && (
         <>
-          {/* Tabela em telas médias e maiores */}
           <div className="hidden md:block">
             <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
               <Table>
@@ -91,7 +90,6 @@ export function SalesOrdersListPage() {
             </div>
           </div>
 
-          {/* Cards em telas pequenas */}
           <ul className="grid gap-3 md:hidden">
             {query.data.map((order) => (
               <li key={order.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">

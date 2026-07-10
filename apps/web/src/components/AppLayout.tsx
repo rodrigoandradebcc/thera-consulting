@@ -32,7 +32,6 @@ export function AppLayout() {
       </a>
 
       <aside className="z-20 border-b border-border bg-card shadow-panel md:sticky md:top-0 md:h-dvh md:border-b-0 md:border-r">
-        {/* Marca */}
         <div className="flex items-center gap-3 px-5 py-4">
           <span
             aria-hidden="true"

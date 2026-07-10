@@ -105,7 +105,6 @@
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum' 1;
   }
-  /* Rótulos técnicos (eyebrow, cabeçalhos de seção do chrome). */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 0.6875rem;

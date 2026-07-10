@@ -56,7 +56,6 @@ export function DashboardPage() {
         />
       ) : (
         <>
-          {/* Tabela em telas médias e maiores */}
           <div className="hidden md:block">
             <div className="overflow-hidden rounded-xl border border-border bg-card shadow-panel">
               <Table>
@@ -86,7 +85,6 @@ export function DashboardPage() {
             </div>
           </div>
 
-          {/* Cards em telas pequenas */}
           <ul className="grid gap-3 md:hidden">
             {upcoming.map(({ order, schedule }) => (
               <li key={order.id} className="rounded-xl border border-border bg-card p-4 shadow-panel">
