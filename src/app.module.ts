@@ -6,6 +6,7 @@ import { HealthController } from './health.controller';
 import { AuditModule } from './modules/audit/audit.module';
 import { CustomersModule } from './modules/customers/customers.module';
 import { ItemsModule } from './modules/items/items.module';
+import { SalesOrdersModule } from './modules/sales-orders/sales-orders.module';
 import { TransportTypesModule } from './modules/transport-types/transport-types.module';
 
 @Module({
@@ -16,6 +17,7 @@ import { TransportTypesModule } from './modules/transport-types/transport-types.
     CustomersModule,
     TransportTypesModule,
     ItemsModule,
+    SalesOrdersModule,
   ],
   controllers: [HealthController],
 })
