@@ -23,7 +23,7 @@ Merge base: `b4b8fc7`
 - [x] Task 9: complete (commits 913db9b..a054d29, review clean). 58 testes. Bug real corrigido: `today()` usava UTC e rejeitava agendar pra hoje entre 21h e 23h59 BRT. Teste de slot agora varia a janela. `isCountFull` centraliza o limite. 3 type assertions do plano eliminadas.
 - [x] Task 10: complete (commits cc96a1f..4224634, review clean). 65 testes. Componente estava certo; os testes do plano é que não provavam nada — assertiva vazia (`de — para` nunca é renderizado), não-reordenação e união de chaves sem cobertura. Corrigido com 3 experimentos de regressão.
 - [x] Task 11: complete (commits 9de1870..5b12b1c, review clean). 78 testes. Bug real: `CustomerTransportTypes` mostrava "nenhum transporte autorizado" durante loading e permanentemente em erro 500 — usuário não distinguia "não tem" de "quebrou". +11 testes cobrindo idempotência do vínculo, dialog de baixa, imutabilidade do `code`, omissão de email vazio.
-- [ ] Task 12: Dashboard
+- [x] Task 12: complete (commits 117dd73..97c19a3, review clean). 82 testes. Plano tinha 3 armadilhas: `schedule!`, `isoDate` em UTC (mesmo bug de fuso da task 9), e `countByStatus as Record`. Todas corrigidas. Teste de zero-count adicionado com regressão provada.
 - [ ] Task 13: A11y, responsividade, README
 
 ## Findings Minor (para o review final triar)
@@ -33,3 +33,4 @@ Merge base: `b4b8fc7`
 - Task 3: commit `bf0eda6` usou `feat:` sem o escopo `(web)` que as outras tasks usam.
 - Task 5 (defeito do plano, não do implementador): os tokens `--color-status-*` declarados em `index.css` estão mortos. `StatusBadge` usa classes Tailwind cruas (`bg-amber-100`). Mudar o token não muda o badge. Ou usar os tokens, ou apagá-los.
 - Task 5: `main.tsx` usa `document.getElementById('root')!`. Vem do scaffold do Vite, não é regressão, mas atrita com a constraint "sem type assertions".
+- Task 12: `ScheduledOrder`/`toScheduledOrders` duplicado byte-a-byte entre `DashboardPage.tsx` e `SchedulingPage.tsx`. Extrair para `src/domain/scheduled-orders.ts` removeria a duplicação e manteria as duas telas em sincronia.
