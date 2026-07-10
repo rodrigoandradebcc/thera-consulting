@@ -40,7 +40,7 @@ function ConfirmButton({ salesOrderId, full }: { salesOrderId: string; full: boo
   }
 
   return (
-    <div className="flex flex-col items-end gap-1">
+    <div className="flex flex-col items-center gap-1">
       <Button size="sm" variant="outline" disabled={full || confirm.isPending} onClick={() => void run()}>
         Confirmar
       </Button>
@@ -96,7 +96,7 @@ export function SchedulingPage() {
               <TableHead>Janela</TableHead>
               <TableHead>Ocupação</TableHead>
               <TableHead>Agendamento</TableHead>
-              <TableHead className="text-right">Ação</TableHead>
+              <TableHead className="text-center">Ação</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -109,7 +109,7 @@ export function SchedulingPage() {
                 <TableCell>
                   <ScheduleStatusBadge status={schedule.status} />
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-center">
                   {schedule.status === 'PENDENTE' ? (
                     <ConfirmButton salesOrderId={order.id} full={full} />
                   ) : (
