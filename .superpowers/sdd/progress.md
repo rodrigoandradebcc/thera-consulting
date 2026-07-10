@@ -22,7 +22,7 @@ Merge base: `b4b8fc7`
 - [x] Task 8: complete (commit aec1b1c, review clean, zero achados). 49 testes. `as NonNullable` do plano substituído por re-narrowing real (`const nextStatus = next` antes da closure).
 - [x] Task 9: complete (commits 913db9b..a054d29, review clean). 58 testes. Bug real corrigido: `today()` usava UTC e rejeitava agendar pra hoje entre 21h e 23h59 BRT. Teste de slot agora varia a janela. `isCountFull` centraliza o limite. 3 type assertions do plano eliminadas.
 - [x] Task 10: complete (commits cc96a1f..4224634, review clean). 65 testes. Componente estava certo; os testes do plano é que não provavam nada — assertiva vazia (`de — para` nunca é renderizado), não-reordenação e união de chaves sem cobertura. Corrigido com 3 experimentos de regressão.
-- [ ] Task 11: Cadastros
+- [x] Task 11: complete (commits 9de1870..5b12b1c, review clean). 78 testes. Bug real: `CustomerTransportTypes` mostrava "nenhum transporte autorizado" durante loading e permanentemente em erro 500 — usuário não distinguia "não tem" de "quebrou". +11 testes cobrindo idempotência do vínculo, dialog de baixa, imutabilidade do `code`, omissão de email vazio.
 - [ ] Task 12: Dashboard
 - [ ] Task 13: A11y, responsividade, README
 
