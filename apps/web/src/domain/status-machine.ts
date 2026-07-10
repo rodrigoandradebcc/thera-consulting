@@ -29,9 +29,9 @@ export function nextStatusOf(status: SalesOrderStatus): SalesOrderStatus | null 
 
 /** Rótulo do botão que leva a cada estado. Verbo, não substantivo. */
 export const ACTION_LABEL: Record<SalesOrderStatus, string> = {
-  CRIADA: 'Criar OV',
-  PLANEJADA: 'Planejar OV',
-  AGENDADA: 'Agendar OV',
+  CRIADA: 'Criar ordem de venda',
+  PLANEJADA: 'Planejar ordem de venda',
+  AGENDADA: 'Agendar ordem de venda',
   EM_TRANSPORTE: 'Despachar',
   ENTREGUE: 'Marcar como entregue',
 };

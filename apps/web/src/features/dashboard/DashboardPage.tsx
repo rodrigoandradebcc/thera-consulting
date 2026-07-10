@@ -61,7 +61,7 @@ export function DashboardPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>OV</TableHead>
+                    <TableHead>Ordem de Venda</TableHead>
                     <TableHead>Data</TableHead>
                     <TableHead>Janela</TableHead>
                     <TableHead>Agendamento</TableHead>

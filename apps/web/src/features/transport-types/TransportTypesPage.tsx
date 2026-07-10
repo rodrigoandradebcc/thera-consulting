@@ -153,8 +153,8 @@ function ToggleActive({ id, active }: { id: string; active: boolean }) {
       <DialogContent>
         <DialogHeader><DialogTitle>Desativar tipo de transporte?</DialogTitle></DialogHeader>
         <p className="text-sm text-muted-foreground">
-          Baixa lógica: o registro é preservado, e as OVs existentes continuam válidas.
-          Ele deixa de ser oferecido em novas OVs.
+          Baixa lógica: o registro é preservado, e as ordens de venda existentes continuam válidas.
+          Ele deixa de ser oferecido em novas ordens de venda.
         </p>
         <DialogFooter>
           <Button variant="ghost" onClick={() => setConfirming(false)}>Cancelar</Button>

@@ -68,7 +68,7 @@ export function SchedulingPage() {
         <PageHeader eyebrow="Logística" title="Central de Agendamento" />
         <EmptyState
           title="Nenhuma entrega agendada"
-          description="Agende uma entrega a partir do detalhe de uma OV."
+          description="Agende uma entrega a partir do detalhe de uma ordem de venda."
         />
       </>
     );
@@ -86,7 +86,7 @@ export function SchedulingPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>OV</TableHead>
+              <TableHead>Ordem de Venda</TableHead>
               <TableHead>Data</TableHead>
               <TableHead>Janela</TableHead>
               <TableHead>Ocupação</TableHead>

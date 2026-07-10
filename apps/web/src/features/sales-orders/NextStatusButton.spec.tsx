@@ -17,13 +17,13 @@ function renderButton(order: SalesOrder) {
 describe('NextStatusButton', () => {
   it('mostra apenas a próxima transição válida', () => {
     renderButton({ ...salesOrderFixture, status: 'CRIADA' });
-    expect(screen.getByRole('button', { name: 'Planejar OV' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Planejar ordem de venda' })).toBeEnabled();
     expect(screen.queryByRole('button', { name: 'Despachar' })).not.toBeInTheDocument();
   });
 
   it('desabilita AGENDADA sem agendamento e explica por quê', () => {
     renderButton({ ...salesOrderFixture, status: 'PLANEJADA', schedule: null });
-    expect(screen.getByRole('button', { name: 'Agendar OV' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Agendar ordem de venda' })).toBeDisabled();
     expect(screen.getByText(/confirme o agendamento/i)).toBeInTheDocument();
   });
 
@@ -33,7 +33,7 @@ describe('NextStatusButton', () => {
       status: 'PLANEJADA',
       schedule: { scheduledDate: '2099-08-01', window: 'MANHA', status: 'PENDENTE', rescheduleCount: 0 },
     });
-    expect(screen.getByRole('button', { name: 'Agendar OV' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Agendar ordem de venda' })).toBeDisabled();
   });
 
   it('habilita AGENDADA com agendamento CONFIRMADO', () => {
@@ -42,7 +42,7 @@ describe('NextStatusButton', () => {
       status: 'PLANEJADA',
       schedule: { scheduledDate: '2099-08-01', window: 'MANHA', status: 'CONFIRMADO', rescheduleCount: 0 },
     });
-    expect(screen.getByRole('button', { name: 'Agendar OV' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Agendar ordem de venda' })).toBeEnabled();
   });
 
   it('não renderiza botão quando ENTREGUE', () => {

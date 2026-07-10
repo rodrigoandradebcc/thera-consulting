@@ -103,7 +103,7 @@ export function ScheduleTab({ order }: { order: SalesOrder }) {
 
       {existing !== null && existing.status === 'CONFIRMADO' && (
         <p className="text-xs text-muted-foreground">
-          Reagendar mantém o agendamento confirmado. A OV não retrocede de status.
+          Reagendar mantém o agendamento confirmado. A ordem de venda não retrocede de status.
         </p>
       )}
     </div>

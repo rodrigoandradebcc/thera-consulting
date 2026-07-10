@@ -90,7 +90,7 @@ export function SalesOrderFilters() {
           onChange={(e) => setFilter('scheduledTo', e.target.value)}
         />
         <p className="text-xs text-muted-foreground">
-          Filtrar por data de entrega esconde as OVs que ainda não têm agendamento.
+          Filtrar por data de entrega esconde as ordens de venda que ainda não têm agendamento.
         </p>
       </div>
 

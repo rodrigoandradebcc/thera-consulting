@@ -28,7 +28,7 @@ export function SalesOrdersListPage() {
         actions={
           <Button asChild>
             <Link to="/sales-orders/new">
-              <Plus aria-hidden="true" className="size-4" /> Nova OV
+              <Plus aria-hidden="true" className="size-4" /> Nova ordem de venda
             </Link>
           </Button>
         }
@@ -42,10 +42,10 @@ export function SalesOrdersListPage() {
       {query.isSuccess && query.data.length === 0 && (
         <EmptyState
           title="Nenhuma ordem de venda"
-          description="Ajuste os filtros ou crie a primeira OV."
+          description="Ajuste os filtros ou crie a primeira ordem de venda."
           action={
             <Button asChild>
-              <Link to="/sales-orders/new">Criar OV</Link>
+              <Link to="/sales-orders/new">Criar ordem de venda</Link>
             </Button>
           }
         />

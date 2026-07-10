@@ -15,7 +15,7 @@ export function NextStatusButton({ order }: { order: SalesOrder }) {
   const updateStatus = useUpdateStatus(order.id);
 
   if (next === null) {
-    return <p className="text-sm text-muted-foreground">Ciclo concluído. A OV foi entregue.</p>;
+    return <p className="text-sm text-muted-foreground">Ciclo concluído. A ordem de venda foi entregue.</p>;
   }
 
   // `next` já foi estreitado para não-nulo acima. Capturamos em uma nova const
@@ -45,7 +45,7 @@ export function NextStatusButton({ order }: { order: SalesOrder }) {
       {blocked && (
         // Desabilitar sem dizer por quê é hostil.
         <p className="text-xs text-amber-800 dark:text-amber-300">
-          Confirme o agendamento antes de agendar a OV.
+          Confirme o agendamento antes de agendar a ordem de venda.
         </p>
       )}
     </div>

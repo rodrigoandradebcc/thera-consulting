@@ -16,7 +16,11 @@ async function bootstrap(): Promise<void> {
     allowedHeaders: ['Content-Type', 'X-Actor'],
   });
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
   );
   app.useGlobalFilters(new AllExceptionsFilter());
 

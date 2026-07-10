@@ -191,8 +191,8 @@ function DeactivateCustomer({ id, active }: { id: string; active: boolean }) {
       <DialogContent>
         <DialogHeader><DialogTitle>Desativar cliente?</DialogTitle></DialogHeader>
         <p className="text-sm text-muted-foreground">
-          Baixa lógica: o registro é preservado e as OVs existentes continuam válidas.
-          Ele deixa de ser oferecido em novas OVs.
+          Baixa lógica: o registro é preservado e as ordens de venda existentes continuam válidas.
+          Ele deixa de ser oferecido em novas ordens de venda.
         </p>
         <DialogFooter>
           <Button variant="ghost" onClick={() => setConfirming(false)}>Cancelar</Button>
@@ -214,7 +214,7 @@ export function CustomersPage() {
       <PageHeader
         eyebrow="Cadastro"
         title="Clientes"
-        description="Cada cliente precisa de ao menos um transporte autorizado para ter OVs."
+        description="Cada cliente precisa de ao menos um transporte autorizado para ter ordens de venda."
         actions={<CreateCustomerDialog />}
       />
 

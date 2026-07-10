@@ -50,7 +50,7 @@ export function AuditTimeline({ salesOrderId }: { salesOrderId: string }) {
   if (query.isPending) return <TableSkeleton rows={3} />;
   if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
   if (query.data.length === 0) {
-    return <EmptyState title="Nenhum evento" description="Nada foi auditado nesta OV ainda." />;
+    return <EmptyState title="Nenhum evento" description="Nada foi auditado nesta ordem de venda ainda." />;
   }
 
   return (
