@@ -11,6 +11,7 @@ import { useSalesOrdersQuery } from '@/features/sales-orders/queries';
 import { WINDOW_LABEL } from '@/features/scheduling/scheduleSchema';
 import type { SalesOrder, SalesOrderSchedule } from '@/lib/api/sales-orders';
 import { dateBR } from '@/lib/format';
+import { todayLocalIso } from '@/lib/today';
 import { StatusCounts } from './StatusCounts';
 
 const DAYS_AHEAD = 7;
@@ -29,32 +30,14 @@ function toScheduledOrders(orders: readonly SalesOrder[]): ScheduledOrder[] {
   return orders.flatMap((order) => (order.schedule === null ? [] : [{ order, schedule: order.schedule }]));
 }
 
-/**
- * Formatar a data em UTC (ex.: cortar a string ISO devolvida pelo `Date`
- * serializado em UTC) não reflete o fuso local. Em São Paulo (UTC-3), entre
- * 21:00 e 23:59 já é o dia seguinte em UTC, então "hoje" e o limite de 7 dias
- * ficariam adiantados por três horas todo fim de dia — uma entrega de hoje
- * sumiria da tabela. Por isso a data é montada a partir dos getters locais
- * (`getFullYear`/`getMonth`/`getDate`), como em `scheduleSchema.ts`. `setDate`
- * com o dia somado já rola mês/ano corretamente.
- */
-function isoDate(offsetDays: number): string {
-  const date = new Date();
-  date.setDate(date.getDate() + offsetDays);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
 export function DashboardPage() {
   const all = useSalesOrdersQuery({});
 
   if (all.isPending) return <TableSkeleton rows={6} />;
   if (all.isError) return <ErrorState error={all.error} onRetry={() => void all.refetch()} />;
 
-  const from = isoDate(0);
-  const to = isoDate(DAYS_AHEAD);
+  const from = todayLocalIso(0);
+  const to = todayLocalIso(DAYS_AHEAD);
   const upcoming = toScheduledOrders(all.data)
     .filter(({ schedule }) => schedule.scheduledDate >= from && schedule.scheduledDate <= to)
     .sort((a, b) => a.schedule.scheduledDate.localeCompare(b.schedule.scheduledDate));

@@ -40,6 +40,14 @@ describe('toApiError', () => {
     expect(result.error).toBe('UnknownError');
   });
 
+  it('trata corpo malformado (sem error/message) como resposta inesperada, não como ApiError com campos undefined', () => {
+    const result = toApiError(axiosErrorWithResponse(500, { statusCode: 500 }));
+
+    expect(result.statusCode).toBe(500);
+    expect(result.error).toBe('UnexpectedResponse');
+    expect(result.message).toBe('Resposta inesperada do servidor.');
+  });
+
   it('classifica por status', () => {
     expect(isConflict(toApiError(axiosErrorWithResponse(409, {})))).toBe(true);
     expect(isNotFound(toApiError(axiosErrorWithResponse(404, {})))).toBe(true);

@@ -20,7 +20,13 @@ export class ApiError extends Error {
 }
 
 function isApiErrorBody(data: unknown): data is ApiErrorBody {
-  return typeof data === 'object' && data !== null && 'statusCode' in data;
+  return (
+    typeof data === 'object'
+    && data !== null
+    && 'statusCode' in data
+    && 'error' in data
+    && 'message' in data
+  );
 }
 
 export function toApiError(error: unknown): ApiError {

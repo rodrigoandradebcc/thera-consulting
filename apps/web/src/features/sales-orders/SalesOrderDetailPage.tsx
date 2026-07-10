@@ -1,4 +1,6 @@
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
+import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { PageHeader } from '@/components/PageHeader';
 import { StatusBadge } from '@/components/StatusBadge';
@@ -7,6 +9,7 @@ import { TableSkeleton } from '@/components/TableSkeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AuditTimeline } from '@/features/audit/AuditTimeline';
 import { ScheduleTab } from '@/features/scheduling/ScheduleTab';
+import { isNotFound } from '@/lib/errors';
 import { money } from '@/lib/format';
 import { NextStatusButton } from './NextStatusButton';
 import { SalesOrderItemsTab } from './SalesOrderItemsTab';
@@ -17,7 +20,23 @@ export function SalesOrderDetailPage() {
   const query = useSalesOrderQuery(id);
 
   if (query.isPending) return <TableSkeleton rows={6} />;
-  if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
+
+  if (query.isError) {
+    if (isNotFound(query.error)) {
+      return (
+        <EmptyState
+          title="Ordem de venda não encontrada"
+          description="Verifique o número ou volte para a lista."
+          action={
+            <Button asChild variant="outline">
+              <Link to="/sales-orders">Voltar para a lista</Link>
+            </Button>
+          }
+        />
+      );
+    }
+    return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
+  }
 
   const order = query.data;
   const frozen = order.status === 'EM_TRANSPORTE' || order.status === 'ENTREGUE';

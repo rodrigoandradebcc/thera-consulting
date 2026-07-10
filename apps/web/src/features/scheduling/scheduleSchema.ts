@@ -1,22 +1,11 @@
 import { z } from 'zod';
-
-// `toISOString()` formata em UTC, não no fuso local. Em São Paulo (UTC-3),
-// entre 21:00 e 23:59 já é o dia seguinte em UTC, então usar `toISOString()`
-// rejeitaria uma data de hoje, ainda válida, como se fosse passada. Por isso
-// montamos a string a partir dos getters locais (`getFullYear`/`getMonth`/`getDate`).
-function today(): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+import { todayLocalIso } from '@/lib/today';
 
 export const scheduleSchema = z.object({
   scheduledDate: z
     .string()
     .min(1, 'Informe a data de entrega.')
-    .refine((value) => value >= today(), 'A data precisa ser hoje ou futura.'),
+    .refine((value) => value >= todayLocalIso(), 'A data precisa ser hoje ou futura.'),
   window: z.enum(['MANHA', 'TARDE', 'INTEGRAL']),
 });
 
