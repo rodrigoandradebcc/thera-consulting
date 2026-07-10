@@ -93,4 +93,35 @@ describe('Customers (e2e)', () => {
 
     expect(second.body.transportTypeIds).toEqual([transport.id]);
   });
+
+  it('lê os tipos de transporte autorizados de um cliente', async () => {
+    const customer = await request(app.getHttpServer())
+      .post('/api/customers')
+      .send({ name: 'ACME', document: '12345678000199' })
+      .expect(201);
+    const transport = await prisma.transportType.create({
+      data: { code: 'CAMINHAO', name: 'Caminhão' },
+    });
+
+    const vazio = await request(app.getHttpServer())
+      .get(`/api/customers/${customer.body.id}/transport-types`)
+      .expect(200);
+    expect(vazio.body).toEqual({ transportTypeIds: [] });
+
+    await request(app.getHttpServer())
+      .post(`/api/customers/${customer.body.id}/transport-types`)
+      .send({ transportTypeIds: [transport.id] })
+      .expect(200);
+
+    const cheio = await request(app.getHttpServer())
+      .get(`/api/customers/${customer.body.id}/transport-types`)
+      .expect(200);
+    expect(cheio.body).toEqual({ transportTypeIds: [transport.id] });
+  });
+
+  it('retorna 404 ao ler transportes de cliente inexistente', async () => {
+    await request(app.getHttpServer())
+      .get('/api/customers/6f0f0b3e-0000-4000-8000-000000000000/transport-types')
+      .expect(404);
+  });
 });
